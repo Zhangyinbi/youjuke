@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+        android:src="@mipmap/btn_close"
+        android:id="@+id/img_close"
+        android:layout_alignRight="@+id/ll_chance_panel"
+        android:layout_alignEnd="@+id/ll_chance_panel"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_chance_panel"
+        android:layout_below="@+id/img_close"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_dialog_white"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="35dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/btn_photo1"
+                android:layout_width="75dp"
+                android:layout_height="75dp"/>
+
+            <TextView
+                android:text="很抱歉!\n你的购买机会用完了~"
+                android:textSize="18sp"
+                android:textColor="@color/text_505050"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_buy"
+            android:text="直接购买 >>"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/shape_btn_green_bg"
+            android:layout_width="250dp"
+            android:layout_height="45dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

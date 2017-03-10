@@ -1,0 +1,128 @@
+package com.youjuke.buildingmaterialmall.widgets;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Rect;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.youjuke.buildingmaterialmall.R;
+import com.youjuke.buildingmaterialmall.entity.Inspiration;
+import com.youjuke.buildingmaterialmall.retrofit.ApiContstants;
+import com.youjuke.buildingmaterialmall.utils.ShareUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 描述: 灵感画廊
+ * --------------------------------------------
+ * 工程:
+ * #0000     mwy     创建日期: 2017-02-17 10:37
+ */
+
+public class InspirationView extends Dialog{
+    private RecyclerView recyclerView;
+    private ImageView mImgClose;
+    private ImageView mImgShare;
+    private Inspiration inspiration;
+    private Context context;
+
+    public InspirationView(final Context context, final Inspiration inspiration) {
+        super(context, R.style.InspirationViewDialogStyle);
+        setContentView(R.layout.dialog_inspiration_view);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        setCanceledOnTouchOutside(true);
+        this.inspiration = inspiration;
+        this.context = context;
+        recyclerView = (RecyclerView) findViewById(R.id.rv_inspiration_view);
+        mImgClose = (ImageView) findViewById(R.id.img_close);
+        mImgShare = (ImageView) findViewById(R.id.img_share);
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                if (parent.getChildLayoutPosition(view) ==0) {
+                    outRect.left = 2;
+                }
+                outRect.right = 2;
+            }
+        });
+        InspirationViewAdapter adapter = new InspirationViewAdapter();
+        recyclerView.setAdapter(adapter);
+        CustomSnapHelper mMySnapHelper = new CustomSnapHelper();
+        mMySnapHelper.attachToRecyclerView(recyclerView);
+        mImgClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+        mImgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("id",inspiration.getId());
+                new ShareUtils().with(context)
+                        .setApi(ApiContstants.LG_SHARE)
+                        .setParams(params)
+                        .toShare();
+            }
+        });
+    }
+
+    class InspirationViewAdapter extends RecyclerView.Adapter<InspirationViewAdapter.InspirationViewVH>{
+
+
+        @Override
+        public InspirationViewVH onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new InspirationViewVH(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.rv_item_inspiration_view, parent,false));
+        }
+
+        @Override
+        public void onBindViewHolder(InspirationViewVH holder, int position) {
+            Glide.with(context).load(inspiration.getImgs().get(position)).into(holder.mImgInspiration);
+            holder.mTvStatus.setText(position+1+"/"+inspiration.getImgs().size());
+            holder.mTvInspirationTitle.setText(""+inspiration.getTitle());
+        }
+
+        @Override
+        public int getItemCount() {
+            return inspiration != null
+                    && inspiration.getImgs() != null
+                    && inspiration.getImgs().size() > 0
+                    ? inspiration.getImgs().size() : 0;
+        }
+
+        class InspirationViewVH extends RecyclerView.ViewHolder{
+            private ImageView mImgInspiration;
+            private TextView mTvStatus;
+            private TextView mTvInspirationTitle;
+            private View view;
+
+            private void assignViews() {
+                mImgInspiration = (ImageView) view.findViewById(R.id.img_inspiration);
+                mTvStatus = (TextView) view.findViewById(R.id.tv_status);
+                mTvInspirationTitle = (TextView) view.findViewById(R.id.tv_inspiration_title);
+            }
+
+
+            public InspirationViewVH(View itemView) {
+                super(itemView);
+                view = itemView;
+                assignViews();
+            }
+        }
+    }
+
+
+}

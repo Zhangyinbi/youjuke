@@ -1,0 +1,172 @@
+package com.youjuke.buildingmaterialmall.retrofit;
+
+/**
+ * 描述:
+ * API 连接常量
+ * <p>
+ * 工程:
+ * #0000    Tian Xiao    2016-09-13 10:09
+ */
+public class ApiContstants {
+
+    //图片主链接
+    public static final String IMG_URL = "http://bk.img.youjuke.com/product";
+    //包名id
+    public static final String BAOMING_ID = "baoming_id";
+    //登录用户的ID
+    public static final String U_ID = "uid";
+    //用户User_id
+    public static final String USER_ID = "user_id";
+    //要修改的地址ID
+    public static final String ID = "id";
+    //收货人姓名 receive_name
+    public static final String RECEIVE_NAME = "receive_name";
+    //省份ID
+    public static final String PROVINCE_ID = "province_id";
+    //城市ID
+    public static final String CITY_ID = "city_id";
+    //区域ID
+    public static final String DISTRICT_ID = "district_id";
+    //详细地址
+    public static final String ADDRESS = "address";
+    //是否设置为默认地址
+    public static final String IS_DEFAULT = "is_default";
+    //设置默认地址
+    public static final String SET_DEFAULT = "setDefault";
+    //获取验证码
+    public static final String GETCODE = "getCode";
+    //验证码
+    public static final String CODE = "code";
+    //手机号
+    public static final String MOBIlE = "mobile";
+    //登录
+    public static final String LOGIN = "Login";
+    //删除地址
+    public static final String ADDRESS_DELETE = "AddressDelete";
+    //获取 个人中心 订单状态 数量
+    public static final String ORDER_COUNT = "OrderStatus";
+    //获取订单列表信息
+    public static final String ORDER_LIST = "OrderList";
+    //获取订单详情
+    public static final String ORDER_DETAILS = "OrderItem";
+    //获取城市区域地址getAddress 不传uid 就是城市区域列表，传uid 就是编辑地址列表信息
+    public static final String GET_ADDRESS = "getAddress";
+    //添加新地址和修改地址 'AddressSave' 传id就是修改，不传id就是保存新增
+    public static final String ADDRESS_SAVE = "AddressSave";
+    //订单流转  订单操作 包含对订单的所有操作
+    public static final String TRANSFER_ORDER = "transfer_order";
+
+    //购买物品 popUpWindow 弹窗 接口
+    public static final String SECK_KILL_DATA = "SeckillData";
+    //商品排期信息
+    public static final String GET_NODE_TEMPLATE = "GetNodeTemplate";
+    //订单id
+    public static final String ORDER_ID = "order_id";
+    //订单对应的商品编号
+    public static final String GOODS_ID = "goods_id";
+
+    //生成订单
+    public static final String SAVE_ORDER = "save_order";
+
+    //更改订单地址信息
+    public static final String UPDATE_ORDER = "update_order";
+
+    //支付宝支付
+    public static final String APP_ALIPAY_PARAMS = "app_alipay_params";
+
+    //微信支付
+    public static final String APP_WXPAY_PARAMS = "app_wxpay_params";
+
+    //检测更新
+    public static final String APP_CURRENT_VERSION = "app_current_version";
+
+    //获取首页数据
+    public static final String GET_INDEX_DATA = "GetIndexData";
+
+    //获取分享数据
+    public static final String GET_SHARE_DATA = "GetShareData";
+    //修改密码过去验证码
+    public static final String GET_IDENTIFYING_CODE = "get_identifying_code";
+    //手机号是否注册验证
+    public static final String CHECK_REGISTER = "check_register";
+    //语音验证是否开启
+    public static final String CHECK_YY = "check_YY";
+    //修改密码
+    public static final String RESET_PASSWORD = "reset_password";
+    //语音验证码类型短  信验证码为0，语音验证码为1
+    public static final String YY_TYPE = "yytype";
+    //注册验证码获取 而且可以获取语音验证码
+    public static final String REGISTER_CODE = "register_code";
+    //注册
+    public static final String REGISTER = "register";
+    //注册密码
+    public static final String PASSWORD = "password";
+    //帐号密码登录
+    public static final String ACCOUNTS_LOGIN = "f_Login";
+    //缺货登记
+    public static final String WANT_BOOK = "WANTBOOK";
+    //未读消息数量
+    public static final String MESSAGE_COUNT = "message_count";
+
+    //检查第三方登录的账户是否存在数据库
+    public static final String GET_USER_IS_EXISTS = "get_user_is_exists";
+    //第三放注册绑定
+    public static final String SET_MALLUSER = "set_malluser";
+    //我的资产
+    public static final String MY_ASSETS = "my_assets";
+    //我的资产
+    public static final String MY_REBATE = "my_rebate";
+    //领取返利
+    public static final String RECEIVE_THE_REBATE = "receive_the_rebate";
+    //流水账单详情
+    public static final String SETTLEMENT_BILL="settlement_bill";
+    //托管资金
+    public static final String  MANAGED_FUNDS="managed_funds";
+    //消息中心
+    public static final String MESSATE_TITLE="messate_title";
+    //消息详情
+    public static final String MESSATE_INFO="messate_info";
+    //设置开工时间
+    public static final String PLAY_MONEY_SET_STARTTIME="play_money_set_starttime";
+    //同意付款
+    public static final String AGREE_PAYMENT="agree_payment";
+    //地址列表
+    public static final String ADDRESS_LIST="AddressList";
+    //账户信息
+    public static final String ACCOUNT_INFO="AccountInfo";
+    //提现接口
+    public static final String WALLET_BALANCE_DRAWAL="wallet_balance_drawal";
+    //进账出账接口
+    public static final String INCOME_OUTCOME_DETAIL="income_outcome_detail";
+    //钱包余额明细接口
+    public static final String WALLET_BALANCE_DETAIL="wallet_balance_detail";
+
+
+    //----------------------------2.0-----------------------------------
+
+    //首页 灵感列表
+    public static final String INSPIRATION = "look_for_inspiration";
+    //首页 头条列表
+    public static final String TOP_NEWS_DECORATION = "decoration_headline";
+
+    //获取轮播图数据
+    public static final String GET_INDEX_LIST = "getIndexList";
+
+    //查获取立即邀请和报价器的分享内容
+    public static final String REDEMPTION_SHARE_DATA = "redemption_share_data";
+
+    //查询用户购买情况，提示用户如何获得购买机会
+    public static final String REDEMPTION_BUY_NODE = "redemption_buy_node";
+
+    //报价器分享成功之后，记录状态
+    public static final String BAOJIA_SHARE_SUCCESS = "baojia_share_success";
+
+    //获取找灵感分享
+    public static final String LG_SHARE = "lg_share";
+
+    //获取找装修头条分享
+    public static final String ZX_SHARE = "zx_share";
+
+    //获取报价器前需要报名和统计
+    public static final String INDEX_SAVE_BAOMING = "index_save_baoming";
+}

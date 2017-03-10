@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_plane"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_project_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="138dp"
+            android:layout_marginTop="16dp"
+            android:text="￥999.00"
+            android:textColor="@color/ff0033"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:id="@+id/tv_project_surplus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="23dp"
+            android:layout_toRightOf="@+id/tv_project_price"
+            android:text="剩余10件"
+            android:textColor="@color/c_999999"
+            android:textSize="11sp"/>
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="16dp"
+            android:src="@mipmap/btn_del1"/>
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_title_yjk_yi_bu_tie"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/tv_project_price"-->
+            <!--android:layout_alignLeft="@+id/tv_project_price"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:text="@string/yjk_yi_bu_tie"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="11dp"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_yjk_yi_bu_tie"-->
+            <!--android:layout_toRightOf="@+id/tv_title_yjk_yi_bu_tie"-->
+            <!--android:layout_alignTop="@+id/tv_title_yjk_yi_bu_tie"-->
+            <!--android:text="￥200.00"-->
+            <!--android:textSize="11dp"-->
+            <!--android:textColor="@color/ff0033"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+
+        <View
+            android:id="@+id/line_project_info"
+            android:layout_marginTop="100dp"
+            android:background="@color/dadada"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:layout_below="@+id/line_project_info"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_title_project_type"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="14dp"
+                android:text="@string/project_type"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.youjuke.buildingmaterialmall.widgets.flowlayout.TagFlowLayout
+                android:id="@+id/tl_project_type"
+                android:layout_marginTop="11dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:max_select="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </com.youjuke.buildingmaterialmall.widgets.flowlayout.TagFlowLayout>
+
+            <View
+                android:layout_marginTop="18dp"
+                android:background="@color/dadada"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:layout_marginTop="18dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="16sp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="购买数量"
+                    android:layout_width="wrap_content"
+                    android:layout_height="33dp"
+                    android:id="@+id/textView"/>
+
+                <com.youjuke.buildingmaterialmall.widgets.AmountView
+                    android:id="@+id/amount_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="15dp"
+                    app:btnTextSize="14sp"
+                    app:btnWidth="36dp"
+                    app:tvWidth="50dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_btn_sure"
+                android:gravity="center"
+                android:layout_marginTop="18dp"
+                android:background="@color/red"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:text="确定"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_alignTop="@+id/rl_plane"
+        android:layout_marginTop="-21dp"
+        android:id="@+id/img_project_icon"
+        android:layout_width="113dp"
+        android:layout_height="113dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/btn_tp"
+        android:background="@drawable/shape_img_icon_bg"
+        android:padding="3dp"/>
+
+</RelativeLayout>

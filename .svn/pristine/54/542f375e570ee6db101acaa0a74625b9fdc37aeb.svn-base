@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/back_f0f0f0">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请设置新密码"
+        android:textColor="@color/c_999999"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="12dp"
+        android:textSize="15sp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/textView7" />
+
+
+    <TextView
+        android:text="备注:密码6-20位字母或者数字注册，字母需区分大小写"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_alignLeft="@+id/relativeLayout3"
+        android:layout_alignStart="@+id/relativeLayout3"
+        android:layout_marginTop="20dp"
+        android:textSize="13sp"
+        android:textColor="@color/c_999999"
+        android:id="@+id/textView8" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView8"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp"
+        android:text="完成"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:textColor="@color/back_ffffff"
+        android:background="@drawable/bg_identify_code_normal"
+        android:id="@+id/button_complete" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/back_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/linearLayout4"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <com.youjuke.buildingmaterialmall.module.ClearEditText
+            android:id="@+id/edit_pwd"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.@"
+            android:hint="请输入6-20字符"
+            android:inputType="textPassword"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/c_999999"
+            android:layout_height="40dp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/back_f0f0f0"/>
+
+        <com.youjuke.buildingmaterialmall.module.ClearEditText
+            android:layout_width="match_parent"
+            android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.@"
+            android:hint="请再次输入密码"
+            android:inputType="textPassword"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:layout_marginStart="10dp"
+            android:textSize="18sp"
+            android:textColorHint="@color/c_999999"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:layout_height="40dp"
+            android:id="@+id/edit_pwd_confirm" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:id="@+id/relativeLayout3"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_alignLeft="@+id/button_complete"
+        android:layout_alignStart="@+id/button_complete">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密码可见"
+            android:textColor="@color/c_999999"
+            android:textSize="15sp" />
+
+        <com.youjuke.buildingmaterialmall.module.SwitchView
+            android:id="@+id/swithch_view"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            app:offBorderColor="@color/cccccc"
+            app:offColor="@color/cccccc" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zyb="http://schemas.android.com/apk/res-auto"
+    android:background="@color/back_f0f0f0"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_my_asset_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:navigationIcon="@mipmap/back"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:id="@+id/tv_title"
+            android:text="@string/wallet_detail"
+            android:textColor="@color/colorActionBarText"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:background="@color/back_ffffff"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <com.youjuke.buildingmaterialmall.widgets.MyView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            app:textsize="15sp"
+            android:id="@+id/tv1"
+            app:texts="@string/income"/>
+        <com.youjuke.buildingmaterialmall.widgets.MyView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/tv2"
+            app:textsize="15sp"
+            android:layout_height="wrap_content"
+            app:texts="@string/outcome"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:id="@+id/tab_line"
+        android:background="#00c04f"
+        android:layout_height="2dp"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="2dp">
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

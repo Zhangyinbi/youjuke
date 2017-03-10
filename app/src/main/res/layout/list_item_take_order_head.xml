@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:background="@color/background_color"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rv_user_info"
+        android:layout_width="match_parent"
+        android:layout_height="78dp">
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            tools:text="李先生"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="19dp"
+            android:layout_alignLeft="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/img_address"
+            android:src="@mipmap/btn_add1"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_toRightOf="@+id/img_address"
+            android:layout_below="@+id/tv_user_name"
+            android:layout_alignTop="@id/img_address"
+            android:layout_marginRight="30dp"
+            tools:text="上海市普陀区谈家渡路28号盛泉大厦6楼H室"
+            android:ellipsize="middle"
+            android:maxLines="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_user_phone"
+            android:layout_marginLeft="42dp"
+            tools:text="189****4561"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_user_name"
+            android:layout_alignBottom="@+id/tv_user_name"
+            android:layout_toRightOf="@+id/tv_user_name"
+            android:layout_toEndOf="@+id/tv_user_name"
+            android:layout_marginStart="42dp"/>
+
+        <ImageView
+            android:id="@+id/img_choose_other"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <View
+        android:background="@color/background_color"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+</LinearLayout>

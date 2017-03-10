@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/back_ffffff"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:layout_marginBottom="31dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/default_text_color"
+        android:text="点击“返回”将中断密码找回,是否返回？"/>
+    <ImageView
+        android:background="@color/e6e6e6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/text_cancel"
+            android:text="取消"
+            android:textColor="@color/c_999999"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:background="@color/e6e6e6"
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/text_go_back"
+            android:text="确定"
+            android:textColor="@color/text_25ae5f"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

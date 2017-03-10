@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:background="@color/back_f0f0f0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        app:navigationIcon="@mipmap/back"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="@string/register_tool"
+            android:textColor="@color/colorActionBarText"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="11dp"
+        android:text="备注: 密码6-20位字母或者数字注册，字母需要区分大小写"
+        android:textColor="@color/c_999999"
+        android:textSize="11sp" />
+
+    <Button
+        android:id="@+id/LogoButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView6"
+        android:layout_marginEnd="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_identify_code_normal"
+        android:text="登录"
+        android:textColor="@color/back_ffffff"
+        android:textSize="17sp" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/register_tool_bar"
+        android:layout_marginTop="23dp"
+        android:background="@color/back_ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="23.5dp"
+            android:layout_marginLeft="23.5dp"
+            android:layout_marginRight="23.5dp"
+            android:layout_marginStart="23.dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_edittext"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="59dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="+86"
+                    android:textColor="@color/c_999999"
+                    android:textSize="20dp"
+                    tools:ignore="SpUsage" />
+
+                <ImageView
+                    android:layout_width="1.2dip"
+                    android:layout_height="match_parent"
+                    android:background="#BDC7D8" />
+
+                <com.youjuke.buildingmaterialmall.module.ClearEditText
+                    android:id="@+id/edit_text_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="     请输入正确手机号码"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:singleLine="true"
+                    android:textColorHint="@color/cccccc"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal">
+
+                <com.youjuke.buildingmaterialmall.module.ClearEditText
+                    android:id="@+id/edit_text_verify"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="     请输入验证码"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:singleLine="true"
+                    android:textColorHint="@color/cccccc"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/button_verify"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginStart="23dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/bg_identify_code_normal"
+                    android:maxEms="20"
+                    android:minEms="6"
+                    android:text="获取验证码"
+                    android:textColor="@color/back_ffffff"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+            <com.youjuke.buildingmaterialmall.module.ClearEditText
+                android:id="@+id/edit_text_password"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="textPassword"
+                android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.@"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_edittext"
+                android:hint="  请设置6-20位登录密码"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:textColorHint="@color/cccccc" />
+
+            <com.youjuke.buildingmaterialmall.module.ClearEditText
+                android:id="@+id/edit_text_repetition_password"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="40dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_edittext"
+                android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.@"
+                android:hint="  请再次输入密码"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:textColorHint="@color/cccccc"
+                android:textSize="18sp" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="密码可见"
+                    android:textColor="@color/c_999999"
+                    android:textSize="15sp" />
+
+                <com.youjuke.buildingmaterialmall.module.SwitchView
+                    android:id="@+id/swithch_view"
+                    android:layout_width="40dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    app:offBorderColor="@color/back_f0f0f0"
+                    app:offColor="@color/back_f0f0f0" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_phone_verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/LogoButton"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收不到短信？ 需要"
+            android:textColor="@color/c_999999"
+            android:textSize="16dp"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/textView_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="语音验证码"
+            android:textColor="@color/c3dbf73"
+            android:textSize="16dp"
+            tools:ignore="HardcodedText,SpUsage" />
+    </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

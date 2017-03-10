@@ -1,0 +1,189 @@
+package com.youjuke.buildingmaterialmall.app.balance;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import com.jaeger.library.StatusBarUtil;
+import com.youjuke.buildingmaterialmall.R;
+import com.youjuke.buildingmaterialmall.WrapActivity;
+import com.youjuke.buildingmaterialmall.app.balance.balancedetail.InComeFragment;
+import com.youjuke.buildingmaterialmall.app.balance.balancedetail.OutComeFragment;
+import com.youjuke.buildingmaterialmall.widgets.MyView;
+
+import java.util.ArrayList;
+
+/**
+ * Created by Administrator on 2016/12/30.
+ */
+
+public class BalanceDetailActivity extends WrapActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+    public Toolbar myAssetToolBar;
+    ViewPager pager = null;
+    private View tabline;
+    private int mTabLineWidth;
+    private ArrayList<MyView> title = new ArrayList<MyView>();
+    ArrayList<Fragment> fragments = new ArrayList<>();
+    private MyView tv1;
+    private MyView tv2;
+
+    @Override
+    public void initViews(Bundle savedInstanceState) {
+        StatusBarUtil.setColor(this, Color.parseColor("#00c04f"), 0);
+        tv1 = (MyView) findViewById(R.id.tv1);
+        tv2 = (MyView) findViewById(R.id.tv2);
+        tv1.setOnClickListener(this);
+        tv2.setOnClickListener(this);
+        init();
+        myAssetToolBar = (Toolbar) findViewById(R.id.tb_my_asset_bar);
+        pager = (ViewPager) this.findViewById(R.id.viewpager);
+        pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+        });
+        pager.addOnPageChangeListener(this);
+        pager.setCurrentItem(0);
+        title.get(0).setAlpha(1);
+        intTabLine();
+//        title.get(0).setProgress(1);
+        in: for (int i=0;i<10;i++){
+            break in;
+        }
+    }
+
+    private void init() {
+        title.add(tv1);
+        title.add(tv2);
+        fragments.add(new InComeFragment(this));
+        fragments.add(new OutComeFragment(this));
+    }
+
+    /**
+     * 初始化指示器
+     */
+    private void intTabLine() {
+        tabline = findViewById(R.id.tab_line);
+        Display display = getWindow().getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        mTabLineWidth = outMetrics.widthPixels / 2;
+        ViewGroup.LayoutParams lp = tabline.getLayoutParams();
+        lp.width = mTabLineWidth;
+        tabline.setLayoutParams(lp);
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_balance_detail;
+    }
+
+    @Override
+    public void initToolBar() {
+        setSupportActionBar(myAssetToolBar);
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+            mActionBar.setDisplayShowTitleEnabled(false);
+        }
+        myAssetToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) tabline.getLayoutParams();
+        lp.leftMargin = (int) ((position + positionOffset) * mTabLineWidth);
+        tabline.setLayoutParams(lp);
+        if (positionOffset > 0) {
+            MyView leftView = title.get(position);
+            leftView.setAlpha(1 - positionOffset);
+            MyView rightView = title.get(position + 1);
+            rightView.setAlpha(positionOffset);
+        }
+        if(position>fragments.size())
+        {
+            pager.setCurrentItem(1);
+        }
+        /*float len = (positionOffset * mTabLineWidth - (float) (mTabLineWidth - tv1.getWidth()) / 2);
+        if (len > 0 && len < (float) tv1.getWidth()) {
+            left = title.get(position);
+            right = title.get(position + 1);
+            left.setDirection(1);
+            right.setDirection(0);
+            left.setProgress(1 - len / (float) tv1.getWidth());//1-0
+            right.setProgress(len / (float) tv1.getWidth());//0-1
+            i = 0;
+            return;
+        } else if (len > (float) tv1.getWidth()) {
+            left.setProgress(0);//1-0
+            right.setProgress(1);//0-1
+
+            i = 1;
+            return;
+        } else if (null != left && null != right) {
+            if (i == 0) {
+                left.setProgress(1);//1-0
+                right.setProgress(0);//0-1
+            }
+        }*/
+       /* if (positionOffset > 0)
+        {
+            ColorTrackView left = title.get(position);
+            ColorTrackView right = title.get(position + 1);
+
+            left.setDirection(1);
+            right.setDirection(0);
+            left.setProgress( 1-positionOffset);//1-0
+            right.setProgress(positionOffset);//0-1
+        }*/
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+       /* if (position == 0) {
+            title.get(position).setSelected(true);
+            title.get(1).setSelected(false);
+        } else {
+            title.get(position).setSelected(true);
+            title.get(0).setSelected(false);
+        }*/
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv1:
+                pager.setCurrentItem(0, true);
+                break;
+            case R.id.tv2:
+                pager.setCurrentItem(1, true);
+                break;
+        }
+    }
+}

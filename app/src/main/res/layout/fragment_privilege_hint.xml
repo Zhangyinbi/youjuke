@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- 选购布局-->
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/relative_layout_choose"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <RelativeLayout
+            android:id="@+id/rl_plane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_project_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="138dp"
+                android:layout_marginStart="138dp"
+                android:layout_marginTop="16dp"
+                android:text="￥10"
+                android:textColor="@color/ff0033"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/tv_project_surplus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="23dp"
+                android:layout_toRightOf="@+id/tv_project_price"
+                android:layout_toEndOf="@+id/tv_project_price"
+                android:text="预付定金"
+                android:textColor="@color/c_999999"
+                android:textSize="11sp"/>
+
+            <ImageView
+                android:id="@+id/img_close"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="16dp"
+                android:src="@mipmap/btn_del1"/>
+
+            <TextView
+                android:id="@+id/tv_title_yjk_yi_bu_tie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_project_price"
+                android:layout_alignLeft="@+id/tv_project_price"
+                android:layout_alignStart="@+id/tv_project_price"
+                android:layout_marginTop="10dp"
+                android:text="商品总价"
+                android:textColor="@color/black"
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/tv_yjk_yi_bu_tie"
+                android:layout_toEndOf="@+id/tv_title_yjk_yi_bu_tie"
+                android:layout_toRightOf="@+id/tv_title_yjk_yi_bu_tie"
+                android:layout_alignTop="@+id/tv_title_yjk_yi_bu_tie"
+                android:text="￥200.00"
+                android:textSize="11sp"
+                android:textColor="@color/ff0033"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:id="@+id/line_project_info"
+                android:layout_marginTop="100dp"
+                android:background="@color/dadada"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:layout_below="@+id/line_project_info"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_title_project_type"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/project_type"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.youjuke.buildingmaterialmall.widgets.flowlayout.TagFlowLayout
+                    android:id="@+id/tl_project_type"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginRight="15dp"
+                    app:max_select="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </com.youjuke.buildingmaterialmall.widgets.flowlayout.TagFlowLayout>
+
+
+
+
+                <TextView
+                    android:id="@+id/tv_btn_sure"
+                    android:gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:background="@color/red"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:text="确定"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="剩余10件"
+                android:textColor="@color/c_999999"
+                android:textSize="11sp"
+                android:layout_alignBaseline="@+id/tv_yjk_yi_bu_tie"
+                android:layout_alignBottom="@+id/tv_yjk_yi_bu_tie"
+                android:layout_toRightOf="@+id/tv_yjk_yi_bu_tie"
+                android:layout_toEndOf="@+id/tv_yjk_yi_bu_tie"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:id="@+id/textView2" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_alignTop="@+id/rl_plane"
+            android:layout_marginTop="-21dp"
+            android:id="@+id/img_project_icon"
+            android:layout_width="113dp"
+            android:layout_height="113dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/btn_tp"
+            android:background="@drawable/shape_img_icon_bg"
+            android:padding="3dp"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="3dp"
+        android:visibility="visible"
+        app:cardPreventCornerOverlap="true"
+        android:id="@+id/card_privilege_hint"
+        app:cardElevation="2dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/back_ffffff"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginTop="20dp"
+        android:text="10元特权"
+        android:textColor="@color/back_333333"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/back_333333"
+
+            android:text="•可线下实体展厅看样，确认后付款；"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/back_333333"
+            android:layout_height="wrap_content"
+            android:text="•30天内支付尾款，可享受秒杀特价；"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/back_333333"
+            android:text="•超时未支付尾款自动取消订单，10元定金自动退还!"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/back_333333"
+            android:text="线下展厅："/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/back_333333"
+            android:text="优居客建材家居特卖馆 闵行区七莘路200号"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/back_333333"
+            android:text="请注意："/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/back_333333"
+            android:text="10元预抢用户发货时间为15个工作日内"/>
+    </LinearLayout>
+    <!--<TextView-->
+        <!--android:gravity="center"-->
+        <!--android:text="下一步"-->
+        <!--android:textColor="@color/back_ffffff"-->
+        <!--android:textSize="20sp"-->
+        <!--android:background="@color/back_f82d2d"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="@color/back_f82d2d"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:id="@+id/card_next"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="下一步"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:textColor="@color/back_ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.CardView>
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

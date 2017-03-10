@@ -1,0 +1,795 @@
+package com.youjuke.buildingmaterialmall.app.home;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.baidu.mobstat.StatService;
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.bumptech.glide.Glide;
+import com.google.gson.reflect.TypeToken;
+import com.youjuke.buildingmaterialmall.BuildingMaterialApp;
+import com.youjuke.buildingmaterialmall.Constant;
+import com.youjuke.buildingmaterialmall.R;
+import com.youjuke.buildingmaterialmall.app.bargain_buy.BargainBuyActivity;
+import com.youjuke.buildingmaterialmall.app.common_web.CommonActivity;
+import com.youjuke.buildingmaterialmall.app.login.LoginActivity;
+import com.youjuke.buildingmaterialmall.app.message_center.MessageCenterActivity;
+import com.youjuke.buildingmaterialmall.app.seckill.SeckillDetailsActivity;
+import com.youjuke.buildingmaterialmall.app.special_selling.SpecialSellingActivity;
+import com.youjuke.buildingmaterialmall.entity.HouseType;
+import com.youjuke.buildingmaterialmall.entity.Index;
+import com.youjuke.buildingmaterialmall.entity.Inspiration;
+import com.youjuke.buildingmaterialmall.entity.TopNewsOfDecoration;
+import com.youjuke.buildingmaterialmall.retrofit.ApiContstants;
+import com.youjuke.buildingmaterialmall.retrofit.RequestBean;
+import com.youjuke.buildingmaterialmall.retrofit.ResponseBean;
+import com.youjuke.buildingmaterialmall.retrofit.RetrofitManager;
+import com.youjuke.buildingmaterialmall.retrofit.RetryWhenNetworkException;
+import com.youjuke.buildingmaterialmall.retrofit.api.CommonService;
+import com.youjuke.buildingmaterialmall.widgets.HouseTypePicker;
+import com.youjuke.buildingmaterialmall.widgets.ObservableScrollView;
+import com.youjuke.buildingmaterialmall.widgets.OneYuanBuyGuideDialog;
+import com.youjuke.buildingmaterialmall.widgets.ScrollViewListener;
+import com.youjuke.swissgearlibrary.base.BaseFragment;
+import com.youjuke.swissgearlibrary.rxbus.RxBus;
+import com.youjuke.swissgearlibrary.rxbus.annotation.Subscribe;
+import com.youjuke.swissgearlibrary.rxbus.annotation.Tag;
+import com.youjuke.swissgearlibrary.utils.L;
+import com.youjuke.swissgearlibrary.utils.ToastUtil;
+import com.youjuke.swissgearlibrary.utils.Validator;
+
+import org.jetbrains.annotations.Contract;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import me.everything.android.ui.overscroll.IOverScrollDecor;
+import me.everything.android.ui.overscroll.IOverScrollUpdateListener;
+import me.everything.android.ui.overscroll.ListenerStubs;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+/**
+ * 描述:
+ * 主页
+ * <p/>
+ * 工程:
+ * #0000    Tian Xiao    2016-09-08 15:21
+ * #0001    tian xiao    2016-10-13 嵌套WED 改为原生
+ */
+public class IndexFragment extends BaseFragment implements View.OnClickListener {
+
+    private Index index;
+    private Toolbar toolBar;
+    private ImageView toolBarImageView;
+    private ObservableScrollView scrollView;
+    private ConvenientBanner banner;
+    private TextView textViewMessageNum;
+    private RelativeLayout relativeLayoutToolBarMessage;
+    private LinearLayout ll_budget_audit;//审核预算
+    private LinearLayout ll_node_check;//节点验收
+    private LinearLayout ll_decoration_compensate;//装修赔付
+    private LinearLayout ll_interest_free_loan;//免息贷款
+    private LinearLayout ll_house_type_picker;
+    private EditText edit_area;
+    private TextView tv_house_type;
+    private EditText edit_phone_number;
+    private Button btn_get_result;
+    private RelativeLayout rl_free_to_design;
+    private RelativeLayout rl_decoration_manager;
+    private RecyclerView rv_find_inspiration;
+    private RecyclerView rv_top_news_of_decoration;
+    private ImageView img_more_inspiration;
+    private ImageView img_more_top_news_of_decoration;
+
+    private HouseTypePicker houseTypePicker;
+    private OneYuanBuyGuideDialog oneYuanBuyGuideDialog;
+
+    private List<Inspiration> inspirations = new ArrayList<>();
+    private List<TopNewsOfDecoration> topNewsOfDecorations = new ArrayList<>();
+    private HouseType houseType;
+    private InspirationAdapter inspirationAdapter;
+    private TopNewsOfDecorationAdapter topNewsOfDecorationAdatper;
+
+    private float off = 0f;
+    private static final int MIXOFF = 100;//偏移量小于这个值不刷新
+    private TextView tTitle;
+    private TextView tContent;
+    private int s;
+    private int b;
+    private RelativeLayout titleLayout;
+    private TextView toolbarTitle;
+
+    private void assignViews() {
+        banner = (ConvenientBanner) parentView.findViewById(R.id.convenientBanner);
+        textViewMessageNum = (TextView) parentView.findViewById(R.id.textView_message_num);
+        scrollView = $(R.id.scroll_view);
+        ll_budget_audit = $(R.id.ll_budget_audit);
+        ll_node_check = $(R.id.ll_node_check);
+        ll_decoration_compensate = $(R.id.ll_decoration_compensate);
+        ll_interest_free_loan = $(R.id.ll_interest_free_loan);
+        ll_house_type_picker = $(R.id.ll_house_type_picker);
+        edit_area = $(R.id.edit_area);
+        tv_house_type = $(R.id.tv_house_type);
+        edit_phone_number = $(R.id.edit_phone_number);
+        btn_get_result = $(R.id.btn_get_result);
+        rl_free_to_design = $(R.id.rl_free_to_design);
+        rl_decoration_manager = $(R.id.rl_decoration_manager);
+        rv_find_inspiration = $(R.id.rv_find_inspiration);
+        rv_top_news_of_decoration = $(R.id.rv_top_news_of_decoration);
+        img_more_inspiration = $(R.id.img_more_inspiration);
+        img_more_top_news_of_decoration = $(R.id.img_more_top_news_of_decoration);
+
+        toolBarImageView = (ImageView) parentView.findViewById(R.id.tool_bar_imageView);
+        toolBar = (Toolbar) parentView.findViewById(R.id.tool_bar);
+        //使用富文本设置字体颜色
+        tTitle = (TextView) parentView.findViewById(R.id.text_title);
+//        tContent = (TextView) parentView.findViewById(R.id.text_content);
+        titleLayout = (RelativeLayout) parentView.findViewById(R.id.titilelayout);
+        toolbarTitle = (TextView) parentView.findViewById(R.id.toolbar_title);
+
+        //设置随着scrollview滑动，toolbar透明度的改变
+        banner.setFocusable(true);
+        titleLayout.getBackground().setAlpha(0);
+        toolbarTitle.setVisibility(View.GONE);
+        toolBarImageView.setVisibility(View.GONE);
+        scrollView.setScrollViewListener(new ScrollViewListener() {
+            @Override
+            public void onScrollChanged(ObservableScrollView var1, int var2, int var3, int var4, int var5) {
+
+                if (b == 0) {
+                    b = banner.getHeight() - (toolBar.getHeight());
+                }
+                s = scrollView.getScrollY();
+
+                if (s >= 0 && s < 3) {
+                    s = 0;
+                    toolbarTitle.setVisibility(View.GONE);
+                    toolBarImageView.setVisibility(View.GONE);
+                    titleLayout.getBackground().setAlpha(s / 100 * 200);
+                }
+
+                if (s >= 3 && s < b ) {
+                    titleLayout.getBackground().setAlpha(s * 255 / b);
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    toolBarImageView.setVisibility(View.VISIBLE);
+                }
+
+                if (s > b ) {
+
+                    titleLayout.getBackground().setAlpha(255);
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    toolBarImageView.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+//        tTitle.setText("10秒了解你装修需要花多少钱");
+        String showText = "<font color='green'>10秒</font>了解你装修需要花多少钱";
+        Spanned spanned = Html.fromHtml(showText);
+
+        String showContent = "今日已有<font color='green'>678</font>位用户成功获取";
+        Spanned spanned1 = Html.fromHtml(showContent);
+//        tContent.setText(spanned1);
+        tTitle.setText(spanned);
+
+        relativeLayoutToolBarMessage = (RelativeLayout) parentView.findViewById(R.id.relativeLayout_tool_bar_message);
+        relativeLayoutToolBarMessage.setOnClickListener(this);
+        textViewMessageNum.setOnClickListener(this);
+        toolBarImageView.setOnClickListener(this);
+        ll_budget_audit.setOnClickListener(this);
+        ll_node_check.setOnClickListener(this);
+        ll_decoration_compensate.setOnClickListener(this);
+        ll_interest_free_loan.setOnClickListener(this);
+        btn_get_result.setOnClickListener(this);
+        rl_free_to_design.setOnClickListener(this);
+        rl_decoration_manager.setOnClickListener(this);
+        img_more_inspiration.setOnClickListener(this);
+        img_more_top_news_of_decoration.setOnClickListener(this);
+        ll_house_type_picker.setOnClickListener(this);
+
+        IOverScrollDecor iOverScrollDecor = OverScrollDecoratorHelper.setUpOverScroll(scrollView);
+        View view = iOverScrollDecor.getView();
+        view.setBackgroundResource(R.color.back_f0f0f0);
+        iOverScrollDecor.setOverScrollStateListener(new ListenerStubs.OverScrollStateListenerStub() {
+            @Override
+            public void onOverScrollStateChange(IOverScrollDecor decor, int oldState, int newState) {
+                super.onOverScrollStateChange(decor, oldState, newState);
+                if (oldState == 1) {
+                    if (off > MIXOFF) {
+                        //刷新从网络获取数据
+                        getBannerData();
+                        getInspirationList();
+                        getTopNewsDecorationList();
+                    }
+                }
+            }
+        });
+        //滑动状态监听，state 0-1-3 往下滑动 0-2-3往上滑动 offset滑动的偏移量
+        iOverScrollDecor.setOverScrollUpdateListener(new IOverScrollUpdateListener() {
+            @Override
+            public void onOverScrollUpdate(IOverScrollDecor decor, int state, float offset) {
+                off = offset;
+            }
+        });
+
+        RxBus.get().register(this);
+
+    }
+
+    @Contract(" -> !null")
+    public static IndexFragment newInstance() {
+        return new IndexFragment();
+    }
+
+    @Override
+    public int getLayoutResId() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    public void finishCreateView(Bundle state) {
+        //设置屏幕全屏
+        Window window = activity.getWindow();
+        //设置透明状态栏,这样才能让 ContentView 向上
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        //设置状态栏颜色
+//        window.setStatusBarColor(statusColor);
+
+        ViewGroup mContentView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
+        View mChildView = mContentView.getChildAt(0);
+        if (mChildView != null) {
+            //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 使其不为系统 View 预留空间.
+            ViewCompat.setFitsSystemWindows(mChildView, false);
+        }
+        assignViews();
+        //getIndexInfo();
+        initData();
+        if (BuildingMaterialApp.user != null) {
+            getMessageCount();
+        }
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        rv_find_inspiration.setLayoutManager(
+                new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        rv_find_inspiration.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                if (parent.getChildLayoutPosition(view) == 0) {
+                    outRect.left = 20;
+                }
+                outRect.right = 20;
+            }
+        });
+        inspirationAdapter = new InspirationAdapter(getActivity(), inspirations);
+        rv_find_inspiration.setAdapter(inspirationAdapter);
+
+        rv_top_news_of_decoration.setLayoutManager(new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        topNewsOfDecorationAdatper =
+                new TopNewsOfDecorationAdapter(getActivity(), topNewsOfDecorations);
+        rv_top_news_of_decoration.setAdapter(topNewsOfDecorationAdatper);
+
+        getBannerData();
+        getInspirationList();
+        getTopNewsDecorationList();
+        //如果没登陆 引导去一元换购页面
+        if (BuildingMaterialApp.user == null) {
+            oneYuanBuyGuideDialog = new OneYuanBuyGuideDialog(getActivity());
+            oneYuanBuyGuideDialog.show();
+        }
+    }
+
+
+    /**
+     * 获取灵感列表
+     */
+    private void getInspirationList() {
+        params.clear();
+        Subscription subscribe = RetrofitManager.getInstance().create(CommonService.class)
+                .getData(new RequestBean.JsonMsg(ApiContstants.INSPIRATION, params).toJson())
+                .retryWhen(new RetryWhenNetworkException())
+                .compose(this.<ResponseBean>bindToLifecycle())  //生命周期绑定
+                .observeOn(AndroidSchedulers.mainThread())      //设置观察者所在的线程
+                .subscribeOn(Schedulers.io())                   //设置被观察者所在的线程
+                .subscribe(new Subscriber<ResponseBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBean responseBean) {
+                        L.i("灵感数据Data:" + responseBean.getData());
+                        List<Inspiration> dateList = gson.fromJson(
+                                responseBean.getData(), new TypeToken<List<Inspiration>>() {
+                                }.getType());
+                        inspirations.clear();
+                        inspirations.addAll(dateList);
+                        inspirationAdapter.notifyDataSetChanged();
+                    }
+                });
+        compositeSubscription.add(subscribe);
+    }
+
+    /**
+     * 获取装修头条列表
+     */
+    private void getTopNewsDecorationList() {
+        params.clear();
+        Subscription subscribe = RetrofitManager.getInstance().create(CommonService.class)
+                .getData(new RequestBean.JsonMsg(ApiContstants.TOP_NEWS_DECORATION, params).toJson())
+                .retryWhen(new RetryWhenNetworkException())
+                .compose(this.<ResponseBean>bindToLifecycle())  //生命周期绑定
+                .observeOn(AndroidSchedulers.mainThread())      //设置观察者所在的线程
+                .subscribeOn(Schedulers.io())                   //设置被观察者所在的线程
+                .subscribe(new Subscriber<ResponseBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBean responseBean) {
+                        L.i("头条数据Data:" + responseBean.getData());
+                        List<TopNewsOfDecoration> dateList = gson.fromJson(
+                                responseBean.getData(), new TypeToken<List<TopNewsOfDecoration>>() {
+                                }.getType());
+                        topNewsOfDecorations.clear();
+                        topNewsOfDecorations.addAll(dateList);
+                        topNewsOfDecorationAdatper.notifyDataSetChanged();
+                    }
+                });
+        compositeSubscription.add(subscribe);
+    }
+
+
+    /**
+     * 获取轮播图数据
+     */
+    private void getBannerData() {
+        if (mDialog.isShowing()) {
+            mDialog.dimissDialog();
+        }
+        mDialog.showDialog();
+        params.clear();
+        Subscription subscribe = RetrofitManager.getInstance().create(CommonService.class)
+                .getData(new RequestBean.JsonMsg(ApiContstants.GET_INDEX_LIST, params).toJson())
+                .retryWhen(new RetryWhenNetworkException())
+                .compose(this.<ResponseBean>bindToLifecycle())  //生命周期绑定
+                .observeOn(AndroidSchedulers.mainThread())      //设置观察者所在的线程
+                .subscribeOn(Schedulers.io())                   //设置被观察者所在的线程
+                .subscribe(new Subscriber<ResponseBean>() {
+                    @Override
+                    public void onCompleted() {
+                        if (mDialog.isShowing()) {
+                            mDialog.dimissDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.i("轮播图数据加载失败！");
+                        e.printStackTrace();
+                        if (mDialog.isShowing()) {
+                            mDialog.dimissDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(ResponseBean responseBean) {
+                        L.i("轮播图数据Data:" + responseBean.getData());
+                        index = gson.fromJson(responseBean.getData(), Index.class);
+                        fillBannerData();
+                        if (mDialog.isShowing()) {
+                            mDialog.dimissDialog();
+                        }
+                    }
+                });
+        compositeSubscription.add(subscribe);
+    }
+
+    /**
+     * banner轮换的holer
+     */
+    public class LocalImageHolderView implements Holder<Index.BannerImagesBean> {
+        private ImageView imageView;
+
+        @Override
+        public View createView(Context context) {
+            imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            return imageView;
+        }
+
+        @Override
+        public void UpdateUI(Context context, int position, Index.BannerImagesBean data) {
+            Glide.with(context).load(data.getImg())
+                    .into(imageView);
+        }
+    }
+
+    /**
+     * 填充轮播图数据
+     */
+    private void fillBannerData() {
+
+        //加载banner
+        banner.setPages(
+                new CBViewHolderCreator<LocalImageHolderView>() {
+                    @Override
+                    public LocalImageHolderView createHolder() {
+                        return new LocalImageHolderView();
+                    }
+                }, index.getBanner_images())
+                .startTurning(5000)
+                .setPointViewVisible(true)//设置指示器是否可见
+                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
+                //设置指示器的方向
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        //banner点击事件
+        banner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                Index.BannerImagesBean bean = index.getBanner_images().get(position);
+                //Type为0 代表是跳转普通网页  type 为1 表示跳转制定Activity Target 表示具体目标 type为其他的表示不进行跳转
+                if (bean.getType() == 0) {
+                    Intent intent = new Intent(mContext, CommonActivity.class);
+                    intent.putExtra("url", bean.getLink());
+                    intent.putExtra("title", bean.getTitle());
+                    mContext.startActivity(intent);
+                } else if (bean.getType() == 1) {
+                    if (bean.getTarget().equals("一元超值购")) {
+                        Intent intent = new Intent(mContext, BargainBuyActivity.class);
+                        intent.putExtra("link", bean.getLink());
+                        mContext.startActivity(intent);
+                    } else if (bean.getTarget().equals("爆款秒杀")) {
+                        Intent intent5 = new Intent(mContext, SeckillDetailsActivity.class);
+                        intent5.putExtra("url", bean.getLink());
+                        mContext.startActivity(intent5);
+
+                    } else if (bean.getTarget().equals("精选特卖")) {
+                        Intent intent1 = new Intent(mContext, SpecialSellingActivity.class);
+                        mContext.startActivity(intent1);
+                    }
+                }
+            }
+
+        });
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.textView_message_num://消息中心
+            case R.id.tool_bar_imageView:
+            case R.id.relativeLayout_tool_bar_message:
+                if (BuildingMaterialApp.user == null) {
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                } else {
+                    startActivity(new Intent(mContext, MessageCenterActivity.class));
+                }
+                break;
+
+            case R.id.ll_budget_audit://审核预算
+                StatService.onEvent(mContext, "首页审核预算服务点击量", "eventLabel", 1);
+                toCommonActivity(Constant.URL_BUDGET_AUDIT, getString(R.string.budget_audit));
+                break;
+            case R.id.ll_node_check://节点验收
+                StatService.onEvent(mContext, "首页节点验收服务点击量", "eventLabel", 1);
+                toCommonActivity(Constant.URL_NODE_CHECK, getString(R.string.node_check));
+                break;
+            case R.id.ll_decoration_compensate://装修赔付
+                StatService.onEvent(mContext, "首页装修赔付服务点击量", "eventLabel", 1);
+                toCommonActivity(Constant.URL_DECORATION_COMPESTATE, getString(R.string.decoration_compensate));
+                break;
+            case R.id.ll_interest_free_loan://免息贷款
+                StatService.onEvent(mContext, "首页免息贷款服务点击量", "eventLabel", 1);
+                toCommonActivity(Constant.URL_INTEREST_FREE_LOAN, getString(R.string.interest_free_loan));
+                break;
+            case R.id.btn_get_result://计算装修花费
+                if (TextUtils.isEmpty(edit_area.getText())) {
+                    ToastUtil.show(getActivity(), "请输入面积");
+                    return;
+                }
+                if (TextUtils.isEmpty(tv_house_type.getText())) {
+                    ToastUtil.show(getActivity(), "请选择户型");
+                    return;
+                }
+                if (TextUtils.isEmpty(edit_phone_number.getText())) {
+                    ToastUtil.show(getActivity(), "请输入手机号码");
+                    return;
+                }
+                if (!Validator.isMobile(edit_phone_number.getText().toString())) {
+                    ToastUtil.show(getActivity(), "请输入正确的手机号码");
+                    return;
+                }
+                quotedPrice();
+                break;
+            case R.id.rl_free_to_design://免费设计
+                StatService.onEvent(mContext, "首页免费设计服务点击量", "eventLabel", 1);
+                toCommonActivity(Constant.URL_FREE_TO_DESIGN, getString(R.string.free_to_design));
+                break;
+            case R.id.rl_decoration_manager://装修管家
+                StatService.onEvent(mContext, "首页装修管家服务点击量", "eventLabel", 1);
+                toCommonActivity(Constant.URL_DECORATION_COMPESTATE, getString(R.string.decoration_manager));
+                break;
+            case R.id.img_more_inspiration://更多灵感
+                toCommonActivity(Constant.URL_MORE_FIND_INSPIRATION, "更多灵感");
+                break;
+            case R.id.img_more_top_news_of_decoration://更多头条
+                toCommonActivity(Constant.URL_MORE_TOP_NEWS_DECORATION,
+                        getString(R.string.more_top_news_of_decoration));
+                break;
+            case R.id.ll_house_type_picker:
+                if (houseTypePicker == null) {
+                    houseTypePicker = new HouseTypePicker(getActivity());
+                }
+                if (houseTypePicker.isShowing()) houseTypePicker.dismiss();
+                houseTypePicker.show();
+                break;
+                /*case R.id.iamge_redemption_ad://一元超值购
+                    if (index != null) {
+                        Index.RedemptionAdBean redemptionAdBean = index.getRedemption_ad();
+                        String title = redemptionAdBean.getTarget();
+                        if (redemptionAdBean.getType() == 1) {
+
+                            if (title.equals("一元超值购")) {
+                                Intent intent4 = new Intent(mContext, BargainBuyActivity.class);
+                                intent4.putExtra("link", redemptionAdBean.getLink());
+                                startActivity(intent4);
+                            }
+
+                            if (title.equals("爆款秒杀")) {
+                                Intent intent5 = new Intent(mContext, SeckillDetailsActivity.class);
+                                intent5.putExtra("url", redemptionAdBean.getLink());
+                                mContext.startActivity(intent5);
+                            }
+
+                            if (title.equals("精选特卖")) {
+                                Intent intent1 = new Intent(mContext, SpecialSellingActivity.class);
+                                mContext.startActivity(intent1);
+                            }
+
+                        } else if (redemptionAdBean.getType() == 0) {
+                            //一元换购
+                            Intent intent3 = new Intent(mContext, BargainBuyActivity.class);
+                            intent3.putExtra("url", redemptionAdBean.getLink());
+                            startActivity(intent3);
+                        }
+                    }
+                    break;*/
+
+                /*case R.id.rl_ms://爆款秒杀
+                case R.id.image_view_seckill:
+                case R.id.button_go_seckill:
+                    if (index!=null) {
+                        Intent intent5 = new Intent(mContext, SeckillDetailsActivity.class);
+                        intent5.putExtra("url", index.getCur_seckill().getUrl());
+                        startActivity(intent5);
+                    }
+                    break;
+
+                case R.id.rl_rq://精选特卖
+                    Intent intent1 = new Intent(mContext, SpecialSellingActivity.class);
+                    startActivity(intent1);
+                    break;
+
+                case R.id.linearLayout_look_seckill:
+                case R.id.imageView_offline://线下特卖
+                case R.id.rl_xxtm:
+                    Intent intent2 = new Intent(mContext, CommonActivity.class);
+                    intent2.putExtra("url", BuildingMaterialApp.YOU_JU_KE_FLASH_SALE);
+                    intent2.putExtra("title", "线下特卖");
+                    startActivity(intent2);
+                    break;*/
+        }
+
+    }
+
+    /**
+     * 获取报价
+     */
+    private void quotedPrice() {
+        if (mDialog.isShowing()){
+            mDialog.dimissDialog();
+        }
+        mDialog.showDialog();
+        params.clear();
+        params.put("unionKey","yzappbjq");
+        params.put("area",edit_area.getText().toString());
+        params.put("mobile",edit_phone_number.getText().toString());
+        Subscription subscribe = RetrofitManager.getInstance().create(CommonService.class)
+                .getData(new RequestBean.JsonMsg(ApiContstants.INDEX_SAVE_BAOMING, params).toJson())
+                .retryWhen(new RetryWhenNetworkException())
+                .compose(this.<ResponseBean>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ResponseBean>() {
+                    @Override
+                    public void onCompleted() {
+                        if (mDialog.isShowing()){
+                            mDialog.dimissDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (mDialog.isShowing()){
+                            mDialog.dimissDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(ResponseBean responseBean) {
+                        if ("200".equals(responseBean.getStatus())){
+                            String quotedPriceUrl = String.format(
+                                    Constant.QUOTED_PRICE_RESULT,
+                                    edit_area.getText().toString(), houseType.getShi(), houseType.getTing());
+                            toCommonActivity(quotedPriceUrl,"免费报价");
+                        }else{
+                            ToastUtil.show(getContext(),"获取失败,请重试");
+                        }
+                        if (mDialog.isShowing()){
+                            mDialog.dimissDialog();
+                        }
+                    }
+                });
+        compositeSubscription.add(subscribe);
+    }
+
+    /**
+     * 跳转公共页面
+     *
+     * @param url
+     * @param title
+     */
+    private void toCommonActivity(String url, String title) {
+        Intent intent = new Intent(getActivity(), CommonActivity.class);
+        intent.putExtra("url", url);
+        intent.putExtra("title", title);
+        startActivity(intent);
+    }
+
+    @Subscribe(tags = @Tag("setHouseType"))
+    public void setHouseType(HouseType houseType) {
+        this.houseType = houseType;
+        tv_house_type.setText(houseType.getName());
+        tv_house_type.setTag(houseType.getId());
+    }
+
+
+    /**
+     * 获取消息数量
+     */
+    private void getMessageCount() {
+        params.clear();
+        params.put("uid", BuildingMaterialApp.user.getId());
+        compositeSubscription.add(RetrofitManager.getInstance().create(CommonService.class)
+                .getData(new RequestBean.JsonMsg(ApiContstants.MESSAGE_COUNT, params).toJson())
+                .compose(this.<ResponseBean>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Action1<ResponseBean>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void call(ResponseBean responseBean) {
+                        L.d("未读消息数量" + responseBean.getData());
+                        if (responseBean.getStatus().equals("200")) {
+                            MessageNum num = gson.fromJson(responseBean.getData(), MessageNum.class);
+                            if (num.getMessage_count() != null && num.getMessage_count().equals("0")) {
+                                textViewMessageNum.setVisibility(View.GONE);
+                            } else if (num.getMessage_count() != null && num.getMessage_count().length() > 0) {
+                                textViewMessageNum.setVisibility(View.VISIBLE);
+                                textViewMessageNum.setText(num.getMessage_count() + "");
+                            }
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
+                    }
+                })
+        );
+    }
+
+    class MessageNum {
+        String message_count;
+
+        public String getMessage_count() {
+            return message_count;
+        }
+
+        public void setMessage_count(String message_count) {
+            this.message_count = message_count;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //开始自动翻页
+        banner.startTurning(5000);
+        if (BuildingMaterialApp.user != null) {
+            getMessageCount();
+        } else {
+            textViewMessageNum.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        banner.stopTurning();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister(this);
+        if (houseTypePicker != null && houseTypePicker.isShowing()) {
+            houseTypePicker.dismiss();
+            houseTypePicker = null;
+        }
+        if (oneYuanBuyGuideDialog != null && oneYuanBuyGuideDialog.isShowing()) {
+            oneYuanBuyGuideDialog.dismiss();
+            oneYuanBuyGuideDialog = null;
+        }
+    }
+}

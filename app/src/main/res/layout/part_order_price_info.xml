@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp">
+
+        <TextView
+            android:id="@+id/tv_title_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_price"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_title_total_price"
+            tools:text="¥199.00"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_title_red_lucky_money_deduction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title_total_price"
+            android:layout_marginTop="8dp"
+            android:text="@string/red_lucky_money_deduction"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_red_lucky_money_deduction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_title_red_lucky_money_deduction"
+            tools:text="¥199.00"
+            android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/tv_prepare_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title_red_lucky_money_deduction"
+            android:layout_marginTop="8dp"
+            android:text="已付定金"
+            android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_prepare_price"
+            android:text="¥ 0.00"
+            android:textSize="15sp"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/tv_title_vouchers_deduction"
+        android:layout_marginTop="10dp"
+        android:background="@color/background_color"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:id="@+id/tv_title_real_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/real_pay_money"
+            android:textColor="@color/back_333333"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_real_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_title_real_payment"
+            android:text="¥199.00"
+            android:textColor="@color/f22d2d"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+</LinearLayout>

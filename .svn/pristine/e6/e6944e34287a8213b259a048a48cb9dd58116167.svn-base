@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.youjuke.buildingmaterialmall"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RIDE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application
+        android:name=".BuildingMaterialApp"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateHidden|adjustResize"
+        tools:ignore="AllowBackup">
+        <meta-data
+            android:name="QBSDKAppKey"
+            android:value="KZ2HbMxdPRhCA9xZWQmXDUjq"/>
+        <!-- 支付宝 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+        </activity>
+        <!-- 支付宝 -->
+
+
+        <!-- APP启动页 -->
+        <activity
+            android:name=".app.start.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- 首页 -->
+        <activity
+            android:name=".app.home.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <!-- 秒杀详情 -->
+        <activity
+            android:name=".app.seckill.SeckillDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 精选特卖 -->
+        <activity
+            android:name=".app.special_selling.SpecialSellingActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 一元夺宝 -->
+        <activity
+            android:name=".app.snatch.SnatchActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 一元超值购 -->
+        <activity
+            android:name=".app.bargain_buy.BargainBuyActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 精选特卖产品详情 -->
+        <activity
+            android:name=".app.product_details.ProductDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 登陆页面 -->
+        <activity
+            android:name=".app.login.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 订单页面 -->
+        <activity
+            android:name=".app.order.OrderActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 订单详情页面 -->
+        <activity
+            android:name=".app.order.OrderDetailsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <!-- 收货地址页面 -->
+        <activity
+            android:name=".app.receipt_address.ReceiptAddressActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 编辑地址 -->
+        <activity
+            android:name=".app.receipt_address_compile.ReceiptAddressCompileActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 客服 -->
+        <activity
+            android:name=".app.service_customer.ServiceCustomerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <!-- 排期详情 -->
+        <activity
+            android:name=".app.schedule_details.ScheduleDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 生成订单界面 -->
+        <activity
+            android:name=".app.buy.TakeOrderActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 选择付款方式 -->
+        <activity
+            android:name=".app.buy.PayWayActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 排期友情提示 -->
+        <activity
+            android:name=".app.schedule_details.FriendshipTipsActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 设置 -->
+        <activity
+            android:name=".app.setting.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 一元超值购商品详情 -->
+        <activity
+            android:name=".app.bargain_buy.BargainBuyDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 引导页面 -->
+        <activity
+            android:name=".app.start.LeadActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 装修跟踪 -->
+        <activity
+            android:name=".app.home.DecorationTrackingActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 通用网页 -->
+        <activity
+            android:name=".app.common_web.CommonActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <!-- 服务保障 -->
+        <activity
+            android:name=".app.service_assurance.ServiceAssuranceActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 手机登陆页面 -->
+        <activity
+            android:name=".app.login.LoginByMobileActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 注册 -->
+        <activity
+            android:name=".app.login.RegisterActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 找回密码 -->
+        <activity
+            android:name=".app.login.RegisterAndForgetPasswordActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- share sdk -->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <data android:scheme="tencent1105667159"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <!-- app更新 -->
+        <service android:name=".update.DownLoadService"/>
+
+        <!-- 第三方登录信息页面 -->
+        <activity
+            android:name=".app.login.ThirdPartyLoginActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 第三方关联 -->
+        <activity
+            android:name=".app.login.ThirdPartyRegisterAndLoginActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 消息通知 -->
+        <activity
+            android:name=".app.message_center.MessageCenterActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 资产管理 -->
+        <activity
+            android:name=".app.myasset.MyAssetActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 消息详情 -->
+        <activity
+            android:name=".app.message_center.MessageDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 支付成功界面 -->
+        <activity
+            android:name=".app.buy.PaySucceedActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 提现 -->
+        <activity
+            android:name=".app.balance.AdvanceActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 余额明细 -->
+        <activity
+            android:name=".app.balance.BalanceDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 极光推送自定义的广播接收器 -->
+        <receiver
+            android:name=".BuildingMaterialReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION"/> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION"/>
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK"/> <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION"/> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.youjuke.buildingmaterialmall"/> <!-- 包名 -->
+            </intent-filter>
+        </receiver>
+
+        <!-- 微信支付界面，必须用方法的 -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <!-- TBs 预加载 -->
+        <service android:name=".PreLoadX5Service"/>
+        <!--装修头条详情-->
+        <activity android:name=".app.home.TopNewsOfDecorationDetailsActivity"
+                  android:screenOrientation="portrait"/>
+    </application>
+
+</manifest>

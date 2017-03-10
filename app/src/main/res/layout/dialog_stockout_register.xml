@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_below="@+id/imageView_close"
+        android:layout_marginTop="-9dp"
+        android:background="@mipmap/btn_yyfxbg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout5"
+        android:orientation="vertical">
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="开抢提醒"
+            android:textSize="17sp"
+            android:textColor="@color/back_333333"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@color/cccccc"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="0.5dp" />
+<RelativeLayout
+    android:layout_marginTop="20dp"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@mipmap/btn_kqtx1"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+
+        <TextView
+            android:textSize="12sp"
+            android:textColor="@color/back_808080"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center"
+            android:text="留下您的联系方式"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="12sp"
+            android:textColor="@color/back_808080"
+            android:layout_gravity="center"
+            android:text="我们会在开抢当天通知您"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.youjuke.buildingmaterialmall.module.ClearEditText
+            android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="11dp"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginRight="30dp"
+            android:singleLine="true"
+            android:hint="请填写您的姓名"
+            android:textColorHint="@color/c_999999"
+            android:id="@+id/text_user_name"
+            android:inputType="textShortMessage"
+            android:background="#f2f2f2"
+            android:layout_height="30dp" />
+
+        <com.youjuke.buildingmaterialmall.module.ClearEditText
+            android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:singleLine="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/text_mobile"
+            android:layout_marginRight="30dp"
+            android:textColorHint="@color/c_999999"
+            android:hint="请填写您的手机号"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:maxLength="11"
+            android:inputType="number"
+            android:background="#f2f2f2"
+            android:layout_height="30dp" />
+
+        <Button
+            android:text="确定"
+            android:id="@+id/button_commit"
+            android:textColor="@color/back_ffffff"
+            android:background="@drawable/bg_login_buttun"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:textSize="16sp"
+            android:layout_marginRight="30dp"
+            android:layout_height="33dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/btn_close"
+        android:id="@+id/imageView_close"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_alignRight="@+id/relativeLayout5"
+        android:layout_alignEnd="@+id/relativeLayout5" />
+</RelativeLayout>

@@ -1,0 +1,199 @@
+package com.youjuke.buildingmaterialmall.app.login.register_forget_password_fragment;
+
+import android.os.Bundle;
+import android.text.InputType;
+import android.view.View;
+import android.widget.Button;
+
+import com.youjuke.buildingmaterialmall.BuildingMaterialApp;
+import com.youjuke.buildingmaterialmall.R;
+import com.youjuke.buildingmaterialmall.app.login.RegisterAndForgetPasswordActivity;
+import com.youjuke.buildingmaterialmall.entity.User;
+import com.youjuke.buildingmaterialmall.module.ClearEditText;
+import com.youjuke.buildingmaterialmall.module.SwitchView;
+import com.youjuke.buildingmaterialmall.retrofit.ApiContstants;
+import com.youjuke.buildingmaterialmall.retrofit.RequestBean;
+import com.youjuke.buildingmaterialmall.retrofit.ResponseBean;
+import com.youjuke.buildingmaterialmall.retrofit.RetrofitManager;
+import com.youjuke.buildingmaterialmall.retrofit.api.CommonService;
+import com.youjuke.buildingmaterialmall.utils.Installation;
+import com.youjuke.swissgearlibrary.base.BaseFragment;
+import com.youjuke.swissgearlibrary.rxbus.RxBus;
+import com.youjuke.swissgearlibrary.utils.L;
+import com.youjuke.swissgearlibrary.utils.SPUtil;
+import com.youjuke.swissgearlibrary.utils.ToastUtil;
+
+import org.jetbrains.annotations.Contract;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+/**
+ * 描述:
+ * 重新设置密码界面 和快速注册密码设置页面
+ * <p>
+ * 工程:
+ * #0000    Tian Xiao    2016-10-26 16:34
+ */
+public class PasswordFragment extends BaseFragment implements View.OnClickListener {
+
+
+    private Button buttonComplete;
+    private ClearEditText editPwd;
+    private ClearEditText editPwdConfirm;
+    private SwitchView swithchView;
+    private String type;
+    private String code;
+    private void assignViews() {
+
+        buttonComplete = (Button) parentView.findViewById(R.id.button_complete);
+        editPwd = (ClearEditText) parentView.findViewById(R.id.edit_pwd);
+        editPwdConfirm = (ClearEditText) parentView.findViewById(R.id.edit_pwd_confirm);
+        swithchView = (SwitchView) parentView.findViewById(R.id.swithch_view);
+        buttonComplete.setOnClickListener(this);
+        swithchView.setOnToggleChanged(new SwitchView.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                if (on) {
+                    editPwd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    editPwdConfirm.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    editPwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    editPwdConfirm.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
+    }
+
+
+    @Contract(" -> !null")
+    public static PasswordFragment newInstance() {
+
+        return new PasswordFragment();
+    }
+
+
+    @Override
+    public int getLayoutResId() {
+        return R.layout.fragment_change_password;
+    }
+
+    @Override
+    public void finishCreateView(Bundle state) {
+        assignViews();
+        type=((RegisterAndForgetPasswordActivity)getActivity()).getType();
+        code=((RegisterAndForgetPasswordActivity)getActivity()).getCode();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_complete:
+                if (editPwd.getText().length() < 6) {
+                    ToastUtil.show(mContext, "密码最小6位数");
+                } else if (editPwdConfirm.getText().length() <6) {
+                    ToastUtil.show(mContext, "重复密码最小6位数");
+                } else if (!editPwd.getText().toString().equals(editPwdConfirm.getText().toString())) {
+                    ToastUtil.show(mContext, "密码与重复密码不一致");
+                } else if (editPwd.getText().toString().equals(editPwdConfirm.getText().toString())) {
+
+                    if (type.equals(RegisterAndForgetPasswordActivity.REGISTER)){
+                        //注册
+                        refisterPassword();
+                    }else if (type.equals(RegisterAndForgetPasswordActivity.ALTERPSW)){
+                        //修改密码
+                        changetPassword();
+                    }else {
+                        //忘记密码
+                        changetPassword();
+                    }
+                }
+                break;
+        }
+    }
+
+    /**
+     * 注册设置密码
+     */
+    private void refisterPassword(){
+        params.clear();
+        params.put(ApiContstants.MOBIlE, ((RegisterAndForgetPasswordActivity) getActivity()).getMobile());
+        params.put(ApiContstants.CODE,code);
+        params.put(ApiContstants.PASSWORD, editPwd.getText().toString());
+        params.put("login_from","yjkapp");
+        mDialog.showDialog();
+        params.put("machine_id", Installation.getUniquePsuedoID().replace("-",""));
+        params.put("channel",SPUtil.get(mContext,"channel",getString(R.string.unknown_source)));
+        compositeSubscription.add(
+                RetrofitManager.getInstance().create(CommonService.class)
+                        .getData(new RequestBean.JsonMsg(ApiContstants.REGISTER, params).toJson())
+                        .compose(this.<ResponseBean>bindToLifecycle())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<ResponseBean>() {
+                            @Override
+                            public void call(ResponseBean responseBean) {
+                                mDialog.dimissDialog();
+                                if (responseBean.getStatus().equals("200")){
+                                    ToastUtil.show(mContext,"注册成功");
+                                    User user = gson.fromJson(responseBean.getData(), User.class);
+                                    SPUtil.setObject(mContext, "user", user);//保存用户信息
+                                    BuildingMaterialApp.user = user;
+                                    //跳转退出
+                                    RxBus.get().post("goBack","true");
+                                    L.d(responseBean.getData()+"");
+
+                                }else if (responseBean.getStatus().equals("400")){
+                                    ToastUtil.show(mContext,responseBean.getMessage());
+                                }
+                            }
+                        }, new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                mDialog.dimissDialog();
+                                ToastUtil.show(mContext,"请求失败,请检查网络状态");
+                            }
+                        })
+        );
+    }
+
+    /**
+     * 修改密码
+     */
+    private void changetPassword() {
+        params.clear();
+        params.put("mobile", ((RegisterAndForgetPasswordActivity) getActivity()).getMobile());
+        params.put("password", editPwd.getText().toString());
+        params.put("login_from","yjkapp");
+        compositeSubscription.add(
+                RetrofitManager.getInstance().create(CommonService.class)
+                        .getData(new RequestBean.JsonMsg(ApiContstants.RESET_PASSWORD, params).toJson())
+                        .compose(this.<ResponseBean>bindToLifecycle())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<ResponseBean>() {
+                            @Override
+                            public void call(ResponseBean responseBean) {
+                                if (responseBean.getStatus().equals("200")){
+                                    ToastUtil.show(mContext,"修改成功");
+                                    User user = gson.fromJson(responseBean.getData(), User.class);
+                                    SPUtil.setObject(mContext, "user", user);//保存用户信息
+                                    BuildingMaterialApp.user = user;
+                                    //跳转退出
+                                    RxBus.get().post("goBack","true");
+                                    L.d(responseBean.getData()+"");
+                                }else if (responseBean.getStatus().equals("400")){
+                                    ToastUtil.show(mContext,"你输入的密码与原密码一致，请修改");
+                                }
+                            }
+                        }, new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                ToastUtil.show(mContext,"请求失败,请检查网络状态");
+                            }
+                        })
+        );
+
+    }
+}

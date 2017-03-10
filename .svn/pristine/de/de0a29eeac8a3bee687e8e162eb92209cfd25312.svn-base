@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/order_tool_bar"
+        android:background="@color/colorPrimary"
+        app:navigationIcon="@mipmap/back"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:layout_gravity="center"
+            android:text="全部订单"
+            android:textSize="20sp"
+            android:textColor="@color/colorActionBarText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_below="@+id/order_tool_bar"
+        android:background="@color/back_bab9b9"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/order_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/order_tool_bar"
+        app:tl_indicator_width="59dp"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_indicator_gravity="BOTTOM"
+        app:tl_iconVisible="false"
+        app:tl_tab_space_equal="true"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/colorTextBlack" />
+
+    <View
+        android:id="@+id/rules"
+        android:layout_below="@+id/order_tabs"
+        android:background="@color/back_f0f2f5"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_below="@id/rules"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.youjuke.swissgearlibrary.widgets.LazyViewPager
+            android:id="@+id/view_page_order"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/fl_fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></FrameLayout>
+
+        </com.youjuke.swissgearlibrary.widgets.LazyViewPager>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+</RelativeLayout>

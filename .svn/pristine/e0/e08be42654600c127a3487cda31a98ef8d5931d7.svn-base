@@ -1,0 +1,87 @@
+package com.youjuke.buildingmaterialmall.widgets;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.youjuke.buildingmaterialmall.Constant;
+import com.youjuke.buildingmaterialmall.R;
+import com.youjuke.buildingmaterialmall.entity.HouseType;
+import com.youjuke.swissgearlibrary.rxbus.RxBus;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 描述: 户型选择器
+ * --------------------------------------------
+ * 工程:
+ * #0000     mwy     创建日期: 2017-02-16 17:22
+ */
+
+public class HouseTypePicker extends Dialog {
+
+    private RecyclerView recyclerView;
+    private List<HouseType> houseTypes = new ArrayList<>();
+    private View.OnClickListener onItemCheckLinstener;
+
+    public HouseTypePicker(Context context) {
+        super(context, R.style.MyDialogStyles);
+        setContentView(LayoutInflater.from(context).inflate(R.layout.dialog_house_type_picker, null));
+        setCanceledOnTouchOutside(true);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_house_type);
+        houseTypes = new Gson().fromJson(Constant.HOUSE_TYPE_JSON, new TypeToken<List<HouseType>>() {
+        }.getType());
+        HouseTypeAdatper adapter = new HouseTypeAdatper();
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    class HouseTypeAdatper extends RecyclerView.Adapter<HouseTypeAdatper.HouseTypeVH> {
+
+        @Override
+        public HouseTypeVH onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new HouseTypeVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_house_type, null));
+        }
+
+        @Override
+        public void onBindViewHolder(HouseTypeVH holder, final int position) {
+            holder.tv_type_name.setText(houseTypes.get(position).getName());
+            holder.tv_type_name.setTag(houseTypes.get(position).getId());
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    RxBus.get().post("setHouseType", houseTypes.get(position));
+                    dismiss();
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return houseTypes.size();
+        }
+
+        class HouseTypeVH extends RecyclerView.ViewHolder {
+
+            private TextView tv_type_name;
+            private View view;
+
+            public HouseTypeVH(View itemView) {
+                super(itemView);
+                view = itemView;
+                tv_type_name = (TextView) itemView.findViewById(R.id.tv_type_name);
+            }
+        }
+    }
+
+
+}

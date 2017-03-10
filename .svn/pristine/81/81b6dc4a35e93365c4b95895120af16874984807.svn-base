@@ -1,0 +1,244 @@
+package com.youjuke.buildingmaterialmall.widgets;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.baidu.mobstat.StatService;
+import com.google.gson.Gson;
+import com.youjuke.buildingmaterialmall.BuildingMaterialApp;
+import com.youjuke.buildingmaterialmall.R;
+import com.youjuke.buildingmaterialmall.app.home.MainActivity;
+import com.youjuke.buildingmaterialmall.entity.ShareProjectInfo;
+import com.youjuke.buildingmaterialmall.retrofit.ApiContstants;
+import com.youjuke.buildingmaterialmall.retrofit.RequestBean;
+import com.youjuke.buildingmaterialmall.retrofit.ResponseBean;
+import com.youjuke.buildingmaterialmall.retrofit.RetrofitManager;
+import com.youjuke.buildingmaterialmall.retrofit.RetryWhenNetworkException;
+import com.youjuke.buildingmaterialmall.retrofit.api.CommonService;
+import com.youjuke.buildingmaterialmall.utils.ShareUtils;
+import com.youjuke.swissgearlibrary.rxbus.RxBus;
+import com.youjuke.swissgearlibrary.utils.ToastUtil;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+/**
+ * 描述: 一元换购机会dialog
+ * --------------------------------------------
+ * 工程:
+ * #0000     mwy     创建日期: 2017-02-20 16:34
+ */
+
+public class OneYuanBuyChanceDialog extends Dialog{
+    public static final int INVITATION = 0x1;//通过邀请获取
+    public static final int BUY = 0x2;//通过购买获取
+    public static final int SHARE = 0x3;//通过分享获取
+    public static final int OVER = 0x4;//机会用完
+
+    private int step;
+
+    private TextView mTvTaskName;
+    private Button mBtnGetChance;
+    private Button mBtnBuy;
+    private ImageView mImgClose;
+    private Context context;
+    private ShareProjectInfo shareProjectInfo;
+    private boolean isFromPayComplete = false;
+
+    private void assignViewsHaveChance() {
+        mTvTaskName = (TextView) findViewById(R.id.tv_task_name);
+        mBtnGetChance = (Button) findViewById(R.id.btn_get_chance);
+        mImgClose = (ImageView) findViewById(R.id.img_close);
+    }
+
+    private void assignViewsNoChance() {
+        mBtnBuy = (Button) findViewById(R.id.btn_buy);
+        mImgClose = (ImageView) findViewById(R.id.img_close);
+    }
+
+    public OneYuanBuyChanceDialog(final Context context, int step) {
+        super(context, R.style.fullWindowDialogStyle);
+        this.context = context;
+        setCanceledOnTouchOutside(false);
+        this.step = step;
+        if (step == INVITATION){
+            setContentView(R.layout.dialog_one_yuan_buy_chance);
+            assignViewsHaveChance();
+            mTvTaskName.setText(R.string.get_chance_for_invitation);
+            mBtnGetChance.setText(R.string.tv_invitation_friends);
+            mBtnGetChance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //购买的分享点击量
+                    if (isFromPayComplete) {
+                        StatService.onEvent(context,"换购商品购买成功后分享次数","eventLabel",1);
+                    } else {
+                        StatService.onEvent(context,"换购商品购买过程中分享次数","eventLabel",1);
+                    }
+                    getShareInfoOfChance("1");
+                }
+            });
+        }else if(step == BUY){
+            setContentView(R.layout.dialog_one_yuan_buy_chance);
+            assignViewsHaveChance();
+            mTvTaskName.setText(R.string.get_chance_for_buy);
+            mBtnGetChance.setText(R.string.tv_buy_now);
+            mBtnGetChance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismiss();
+                    Intent intent = new Intent(context,MainActivity.class);
+                    intent.putExtra("checkFragmentPosition",2);
+                    context.startActivity(intent);
+                }
+            });
+        }else if (step == SHARE){
+            setContentView(R.layout.dialog_one_yuan_buy_chance);
+            assignViewsHaveChance();
+            mTvTaskName.setText(R.string.get_chance_for_share);
+            mBtnGetChance.setText(R.string.tv_share_now);
+            mBtnGetChance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //购买的分享点击量
+                    if (isFromPayComplete) {
+                        StatService.onEvent(context,"换购商品购买成功后分享次数","eventLabel",1);
+                    } else {
+                        StatService.onEvent(context,"换购商品购买过程中分享次数","eventLabel",1);
+                    }
+
+                    RxBus.get().post("getShareInfoOfChance","3");
+                    getShareInfoOfChance("3");
+                }
+            });
+        }else if(step == OVER){
+            setContentView(R.layout.dialog_one_yuan_buy_no_chance);
+            assignViewsNoChance();
+            mBtnBuy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismiss();
+                    RxBus.get().post("BargainBuyDetailsActivity.goBuy","nothing");
+                }
+            });
+        }
+        mImgClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isShowing()){
+                    dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * @param context
+     * @param step
+     * @param isFromPayComplete 根据统计需求 用来区分 dialog 是否来自支付成功页面
+     */
+    public OneYuanBuyChanceDialog(final Context context, int step,boolean isFromPayComplete) {
+        this(context,step);
+        this.isFromPayComplete = isFromPayComplete;
+    }
+
+    /**
+     * 查获取立即邀请和报价器的分享内容
+     * @param step
+     * @author mwy 2017/02/20
+     */
+    public void getShareInfoOfChance(String step){
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.clear();
+        if (BuildingMaterialApp.user != null && BuildingMaterialApp.user.getId() != null) {
+            params.put("userId", BuildingMaterialApp.user.getId());
+        }
+        params.put("step", step);//分享类型 1：立即邀请 3：报价器（必要）
+        Subscription subscribe = RetrofitManager.getInstance().create(CommonService.class)
+                .getData(new RequestBean.JsonMsg(ApiContstants.REDEMPTION_SHARE_DATA, params).toJson())
+                .retryWhen(new RetryWhenNetworkException())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ResponseBean>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        ToastUtil.show(context,"服务器出错,请重试");
+                    }
+
+                    @Override
+                    public void onNext(ResponseBean responseBean) {
+                        if ("200".equals(responseBean.getStatus())) {
+                            shareProjectInfo = new Gson().fromJson(responseBean.getData(), ShareProjectInfo.class);
+                            dismiss();
+                            ShareUtils.share(context,shareProjectInfo,new PlatformActionListener() {
+                                @Override
+                                public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                                    shareComplete();
+                                }
+
+                                @Override
+                                public void onError(Platform platform, int i, Throwable throwable) {
+                                    ToastUtil.show(context,"分享失败");
+                                }
+
+                                @Override
+                                public void onCancel(Platform platform, int i) {
+                                    ToastUtil.show(context,"分享取消");
+                                }
+                            });
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 告诉服务器分享成功
+     */
+    private void shareComplete(){
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.clear();
+        if (BuildingMaterialApp.user != null && BuildingMaterialApp.user.getId() != null) {
+            params.put("userId", BuildingMaterialApp.user.getId());
+        }
+        RetrofitManager.getInstance().create(CommonService.class)
+                .getData(new RequestBean.JsonMsg(ApiContstants.BAOJIA_SHARE_SUCCESS, params).toJson())
+                .retryWhen(new RetryWhenNetworkException())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<ResponseBean>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        ToastUtil.show(context,"分享失败");
+                    }
+
+                    @Override
+                    public void onNext(ResponseBean responseBean) {
+                        if ("200".equals(responseBean.getStatus())) {
+                            ToastUtil.show(context,"分享成功");
+                        }
+                    }
+                });
+    }
+}

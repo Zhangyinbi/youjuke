@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:background="@color/back_f0f0f0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/logi_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:navigationIcon="@mipmap/back"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="@string/login_youjuke_mobile"
+            android:textColor="@color/colorActionBarText"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/logi_tool_bar"
+        android:layout_marginTop="23dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <com.youjuke.buildingmaterialmall.module.ClearEditText
+                android:id="@+id/edit_text_mobile"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="8"
+                android:background="@android:color/white"
+                android:hint="@string/import_modile"
+                android:inputType="number"
+                android:maxEms="11"
+                android:maxLength="11"
+                android:textColor="@color/default_text_color"
+                android:textColorHint="#BDBDBD"
+                android:textSize="@dimen/login_text" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_verify"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="2"
+                android:background="@drawable/bg_identify_code_normal"
+                android:text="@string/get_code"
+                android:textColor="@color/back_ffffff"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/c_999999" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <com.youjuke.buildingmaterialmall.module.ClearEditText
+                android:id="@+id/edit_text_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:background="@android:color/white"
+                android:hint="@string/import_code"
+                android:inputType="number"
+                android:maxEms="5"
+                android:maxLength="5"
+                android:textColor="@color/default_text_color"
+                android:textColorHint="#BDBDBD"
+                android:textSize="@dimen/login_text" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_login_buttun"
+        android:text="@string/login"
+        android:textColor="@color/colorActionBarText"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_phone_verify_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_login"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginTop="23dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收不到短信？ 需要"
+            android:textColor="@color/c_999999"
+            android:textSize="16dp"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/textView_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="语音验证码"
+            android:textColor="@color/c3dbf73"
+            android:textSize="16dp"
+            tools:ignore="HardcodedText,SpUsage" />
+    </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/card_item"
+    android:layout_marginTop="1dp"
+    app:cardElevation="1dp"
+    app:cardMaxElevation="3dp"
+    android:background="@color/back_f0f0f0"
+    android:clickable="true"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/back_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/image_title"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/btn_ywc"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_marginTop="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/back_333333"
+                android:textSize="15sp"
+                android:text="初测"
+                />
+                    <FrameLayout
+                        android:id="@+id/frame_hint"
+                        android:layout_marginLeft="11dp"
+                        android:layout_marginStart="11dp"
+                        android:layout_marginTop="17dp"
+                        android:background="@mipmap/btn_bq1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/back_ffffff"
+                            android:layout_marginBottom="4dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="9sp"
+
+                            android:layout_marginRight="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="友情提示"
+                            />
+                    </FrameLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_time"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/back_808080"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016-11-11"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/relative_layout_state"
+                android:layout_marginRight="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/btn_tx2"
+                android:gravity="center"
+                >
+
+                <TextView
+
+                    android:id="@+id/text_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="进行中"
+                    android:textSize="11sp"
+                    android:textColor="@color/back_ffffff"
+                    />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@mipmap/btn_more"
+                android:id="@+id/image_tag"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:alpha="0"
+            android:background="@color/back_f0f0f0"
+            android:id="@+id/card_specific_details_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

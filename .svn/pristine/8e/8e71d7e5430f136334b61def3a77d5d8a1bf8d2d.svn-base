@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/activity_third_party_login"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="com.youjuke.buildingmaterialmall.app.login.ThirdPartyLoginActivity">
+    <RelativeLayout
+        android:background="@color/back_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/union_login_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:navigationIcon="@mipmap/back"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="联合登录"
+            android:textColor="@color/colorActionBarText"
+            android:textSize="20sp"
+            android:textStyle="normal"/>
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp"
+        android:layout_below="@+id/union_login_tool_bar">
+
+        <ImageView
+            android:id="@+id/img_head"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="35dp"
+            android:src="@mipmap/head_portrait"/>
+
+        <TextView
+            android:id="@+id/tv_platform_user_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_head"
+            android:text="@string/platform_user"
+            android:textColor="@color/c_999999"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_platform_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_platform_user_label"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_platform_user_label"
+            android:includeFontPadding="false"
+            android:text="@string/xxx"
+            android:textColor="@color/c_999999"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_tips_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_platform_user_label"
+            android:layout_marginTop="9dp"
+            android:includeFontPadding="false"
+            android:text="为了给您更好的服务,请关联一个优居客账号"
+            android:textColor="@color/c_333333"
+            android:textSize="16sp"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/tv_tips_label"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/text_cccccc"/>
+
+        <TextView
+            android:id="@+id/tv_no_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider"
+            android:text="@string/no_youjuke_account"
+            android:textColor="@color/back_808080"
+            android:textSize="13sp"/>
+
+        <Button
+            android:id="@+id/btn_quick_register"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_below="@+id/tv_no_account"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_btn_green_bg"
+            android:text="@string/quick_register"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_or"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_quick_register"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginRight="17dp"
+                android:layout_weight="1"
+                android:background="@color/text_cccccc"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="or"
+                android:textColor="@color/text_cccccc"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="17dp"
+                android:layout_weight="1"
+                android:background="@color/text_cccccc"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_has_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_or"
+            android:layout_marginTop="25dp"
+            android:text="@string/has_youjuke_account"
+            android:textColor="@color/back_808080"
+            android:textSize="13sp"/>
+
+        <Button
+            android:id="@+id/btn_immediately_related"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_below="@+id/tv_has_account"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_bg_green_stroke"
+            android:text="@string/immediately_related"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"/>
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,237 @@
+package com.youjuke.buildingmaterialmall.app.buy;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.baidu.mobstat.StatService;
+import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.youjuke.buildingmaterialmall.BuildingMaterialApp;
+import com.youjuke.buildingmaterialmall.R;
+import com.youjuke.buildingmaterialmall.WrapActivity;
+import com.youjuke.buildingmaterialmall.app.login.LoginActivity;
+import com.youjuke.buildingmaterialmall.app.receipt_address.ReceiptAddressActivity;
+import com.youjuke.buildingmaterialmall.entity.AddressList;
+import com.youjuke.buildingmaterialmall.entity.OrderInfo;
+import com.youjuke.buildingmaterialmall.entity.PickProjects;
+import com.youjuke.swissgearlibrary.rxbus.annotation.Subscribe;
+import com.youjuke.swissgearlibrary.rxbus.annotation.Tag;
+import com.youjuke.swissgearlibrary.utils.MoneySimpleFormat;
+import com.youjuke.swissgearlibrary.utils.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 描述:
+ * 生成订单Activity
+ * <p/>
+ * 工程:
+ * #0000    mwy          2016-09-22 14:07:23
+ */
+public class TakeOrderActivity extends WrapActivity implements View.OnClickListener {
+
+    private Toolbar mTakeOrderToolbar;
+    private View mTakeOrderRules;
+    private EasyRecyclerView mRvTakeOrder;
+    private RelativeLayout mRlPayment;
+    private TextView mTvTitleRealPay;
+    private TextView mTvRealPay;
+    private TextView mTvToPay;
+    private RelativeLayout mRvUserInfo;
+    private TextView mTvUserName;
+    private ImageView mImgAddress;
+    private TextView mTvAddress;
+    private TextView mTvUserPhone;
+    private ImageView mImgChooseOther;
+    private TextView mTvTitleTotalPrice;
+    private TextView mTvTotalPrice;
+    private TextView mTvTitleRedLuckyMoneyDeduction;
+    private TextView mTvRedLuckyMoneyDeduction;
+    private TextView mTvTitleRealPayment;
+    private TextView mTvRealPayment;
+    private int classifications_id = -1;//购买商品的择分类id
+    private int projectCount = 0;//购买商品的数
+    private List<PickProjects> projectsList = new ArrayList<>();//购买商品的集合
+    private OrderInfo orderInfo;//返回生成的订单
+    private List<OrderInfo.GoodItemsBean> goodsList = new ArrayList<>();//返回的商品集合
+    private TakeOrderAdapter adapter;
+    private String redemptionId;
+
+    private void assignFootViews(View foot) {
+        mTvTitleTotalPrice = (TextView) foot.findViewById(R.id.tv_title_total_price);
+        mTvTotalPrice = (TextView) foot.findViewById(R.id.tv_total_price);
+        mTvTitleRedLuckyMoneyDeduction = (TextView) foot.findViewById(R.id.tv_title_red_lucky_money_deduction);
+        mTvRedLuckyMoneyDeduction = (TextView) foot.findViewById(R.id.tv_red_lucky_money_deduction);
+        mTvTitleRealPayment = (TextView) foot.findViewById(R.id.tv_title_real_payment);
+        mTvRealPayment = (TextView) foot.findViewById(R.id.tv_real_payment);
+    }
+
+    private void assignHeadViews(View head) {
+        mRvUserInfo = (RelativeLayout) head.findViewById(R.id.rv_user_info);
+        mTvUserName = (TextView) head.findViewById(R.id.tv_user_name);
+        mImgAddress = (ImageView) head.findViewById(R.id.img_address);
+        mTvAddress = (TextView) head.findViewById(R.id.tv_address);
+        mTvUserPhone = (TextView) head.findViewById(R.id.tv_user_phone);
+        mImgChooseOther = (ImageView) head.findViewById(R.id.img_choose_other);
+    }
+
+    private void assignViews() {
+        mTakeOrderToolbar = (Toolbar) findViewById(R.id.take_order_toolbar);
+        mTakeOrderRules = findViewById(R.id.take_order_rules);
+        mRvTakeOrder = (EasyRecyclerView) findViewById(R.id.rv_take_order);
+        mRlPayment = (RelativeLayout) findViewById(R.id.rl_payment);
+        mTvTitleRealPay = (TextView) findViewById(R.id.tv_title_real_pay);
+        mTvRealPay = (TextView) findViewById(R.id.tv_real_pay);
+        mTvToPay = (TextView) findViewById(R.id.tv_to_pay);
+    }
+
+    @Override
+    public void initViews(Bundle savedInstanceState) {
+        if(BuildingMaterialApp.user==null){
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        assignViews();
+        mRlPayment.setVisibility(View.GONE);
+        classifications_id = getIntent().getIntExtra("classifications_id",-1);
+        projectCount = getIntent().getIntExtra("projectCount",0);
+        mRvTakeOrder.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new TakeOrderAdapter(this);
+        mRvTakeOrder.setAdapterWithProgress(adapter);
+        //saveOrderInfo();
+        orderInfo = getIntent().getParcelableExtra("orderInfo");
+        goodsList.clear();
+
+
+        goodsList.addAll(orderInfo.getGood_items());
+        adapter.clear();
+        adapter.removeAllHeader();
+        adapter.removeAllFooter();
+        if (orderInfo != null){
+            //添加头部尾部
+            addHeadAndFoot();
+            mTvToPay.setClickable(true);
+            mRlPayment.setVisibility(View.VISIBLE);
+            mTvRealPay.setText(MoneySimpleFormat.getMoneyType(orderInfo.getActual_fee()));
+            mTvToPay.setOnClickListener(TakeOrderActivity.this);
+        }
+        adapter.addAll(goodsList);
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_take_order;
+    }
+
+    @Override
+    public void initToolBar() {//
+        mTakeOrderToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    /**
+     * 添加头部和尾部
+     */
+    private void addHeadAndFoot(){
+        if (orderInfo.getGood_is_virtual_product()==0){
+            adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
+                @Override
+                public View onCreateView(ViewGroup parent) {
+                    LinearLayout header = (LinearLayout) LayoutInflater.from(TakeOrderActivity.this)
+                            .inflate(R.layout.list_item_take_order_head, null);
+                    assignHeadViews(header);
+                    mTvUserName.setText(orderInfo.getUser_address().getReceive_name());
+                    mTvAddress.setText(orderInfo.getUser_address().getProvince()+" "
+                            +orderInfo.getUser_address().getCity()+" "
+                            +orderInfo.getUser_address().getDistrict()+""
+                            +orderInfo.getUser_address().getAddress()
+                    );
+                    mTvUserPhone.setText(orderInfo.getUser_address().getMobile());
+                    mRvUserInfo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(TakeOrderActivity.this, ReceiptAddressActivity.class);
+                            intent.putExtra("order_id",orderInfo.getOrder_id());
+                            intent.putExtra("fromActivity",2);
+                            startActivity(intent);
+                        }
+                    });
+                    return header;
+                }
+                @Override
+                public void onBindView(View headerView) {}
+            });
+        }
+        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+            @Override
+            public View onCreateView(ViewGroup parent) {
+                LinearLayout foot = (LinearLayout) LayoutInflater.from(TakeOrderActivity.this)
+                        .inflate(R.layout.list_item_take_order_foot, null);
+                assignFootViews(foot);
+                mTvTotalPrice.setText(MoneySimpleFormat.getMoneyType(orderInfo.getTotal_fee()));
+                mTvRedLuckyMoneyDeduction.setText(MoneySimpleFormat.getMoneyType(orderInfo.getAvailable_red_packet()));
+                mTvRealPayment.setText(MoneySimpleFormat.getMoneyType(orderInfo.getActual_fee()));
+                return foot;
+            }
+            @Override
+            public void onBindView(View headerView) {}
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_to_pay://确认支付
+                //百度统计立即支付
+                StatService.onEvent(TakeOrderActivity.this,"换购商品确认订单页立即支付按钮点击量","pass",1);
+                Intent intent = new Intent(this,PayWayActivity.class);
+                intent.putExtra("order_id",orderInfo.getOrder_id());
+                //1为一元夺宝，默认是0
+                intent.putExtra("type","0");
+                //订单类型
+                intent.putExtra("order_type",orderInfo.getOrder_type());
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 选择地址之后 更新页面数据
+     * @param address
+     */
+    @Subscribe(tags = @Tag("updateAddress"))
+    public void updateAddress(AddressList address){
+        mTvUserName.setText(address.getReceive_name());
+        mTvAddress.setText(address.getProvince()+" "
+                +address.getCity()+" "
+                +address.getDistrict()+""
+                +address.getAddress());
+        mTvUserPhone.setText(address.getMobile());
+    }
+
+    @Override
+    protected void onRestart() {
+        if (BuildingMaterialApp.user==null){
+            ToastUtil.show(this,"无帐号信息，无法生成订单");
+            finish();
+        }
+        super.onResume();
+        super.onRestart();
+    }
+}

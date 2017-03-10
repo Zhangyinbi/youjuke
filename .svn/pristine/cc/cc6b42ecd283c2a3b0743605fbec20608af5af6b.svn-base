@@ -1,0 +1,27 @@
+ <resources xmlns:tools="http://schemas.android.com/tools">
+    <!--&lt;!&ndash; 集成材料的主题 &ndash;&gt;-->
+    <!--<style name="AppTheme" parent="android:Theme.Material">-->
+    <!--&lt;!&ndash; 主题颜色  &ndash;&gt;-->
+    <!--&lt;!&ndash;  您的应用程序品牌的应用程序栏的颜色  &ndash;&gt;-->
+    <!--<item name="android:colorPrimary">@color/colorPrimary</item>-->
+    <!--&lt;!&ndash;  为状态栏和上下文应用程序栏的较黑暗的变体&ndash;&gt;-->
+    <!--<item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--&lt;!&ndash;   主题的UI控件，如复选框和文本字段 &ndash;&gt;-->
+    <!--<item name="android:colorAccent">@color/colorAccent</item>-->
+    <!--</style>-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <!--<item name="android:colorControlHighlight">#673AB7</item>-->
+        <!--<item name="android:colorButtonNormal">#CDDC39</item>-->
+    </style>
+
+
+</resources>
+
+

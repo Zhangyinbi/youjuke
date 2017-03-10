@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--一元换购三次机会已经用完-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:background="@mipmap/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView_close"
+        android:layout_alignRight="@+id/linearLayout5"
+        android:layout_alignEnd="@+id/linearLayout5"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+       />
+
+    <LinearLayout
+        android:background="@mipmap/btn_yyfxbg"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:id="@+id/linearLayout5"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_marginTop="16dp"
+            android:src="@mipmap/btn_katong"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="30dp"
+            android:textSize="17sp"
+            android:textColor="@color/back_333333"
+            android:textStyle="bold"
+            android:text="您的三次购买机会已经用完 !"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:text="您还可以"
+            android:textColor="@color/back_333333"
+            android:textSize="14sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="全款直接购买"
+            android:id="@+id/button_commit"
+            android:textColor="@color/back_ffffff"
+            android:background="@drawable/bg_login_buttun"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:textSize="16sp"
+            android:layout_marginRight="30dp"
+            android:layout_height="33dp" />
+
+        <TextView
+            android:id="@+id/text_to_shopping_mall"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/shape_bg_green_stroke"
+            android:layout_gravity="center"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:text="逛逛商城"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="30dp"
+            android:layout_height="33dp" />
+    </LinearLayout>
+</RelativeLayout>

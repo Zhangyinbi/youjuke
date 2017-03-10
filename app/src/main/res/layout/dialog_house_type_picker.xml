@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@drawable/write_box"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+    <com.youjuke.buildingmaterialmall.widgets.PickerView
+        android:id="@+id/minute_pv"
+        android:layout_width="260dp"
+        android:clickable="true"
+        android:layout_height="300dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f0f0f0"/>
+    <LinearLayout
+        android:layout_width="260dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="0dp"
+            android:id="@+id/btn_cancel"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textColor="#d000"
+            android:background="@drawable/color_write_box_left"/>
+        <Button
+            android:layout_width="0dp"
+            android:id="@+id/btn_sure"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:alpha="0.8"
+            android:textColor="@color/back_ffffff"
+            android:background="@drawable/color_green_box_right"/>
+    </LinearLayout>
+
+</LinearLayout>

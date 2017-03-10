@@ -1,0 +1,126 @@
+{
+    "android_gradle_plugin_version": "2.2.3",
+    "apk_path": "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\build\\outputs\\apk\\app-debug.apk",
+    "auto_dependency": true,
+    "build_cache_dir": "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\build\\freeline",
+    "build_directory": "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\build",
+    "build_script": "gradlew.bat :app:assembleDebug",
+    "build_script_work_directory": "",
+    "build_tools_directory": "D:\\android-sdk\\build-tools\\25.0.1",
+    "build_tools_version": "25.0.1",
+    "compile_sdk_directory": "D:\\android-sdk\\platforms\\android-24",
+    "compile_sdk_version": "android-24",
+    "databinding": [
+        
+    ],
+    "databinding_modules": [
+        
+    ],
+    "debug_package": "com.youjuke.buildingmaterialmall",
+    "exclude_dep_res_paths": [
+        
+    ],
+    "extra_dep_res_paths": [
+        
+    ],
+    "freeline_cache_dir": "E:\\AndroidStudioProjects\\BuildingMaterialMall",
+    "freeline_gradle_plugin_version": "0.8.4",
+    "java_home": "D:\\Java\\jdk1.8.0_92",
+    "launcher": "com.youjuke.buildingmaterialmall.app.start.SplashActivity",
+    "main_assets_directory": [
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\assets",
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\assets"
+    ],
+    "main_jniLibs_directory": [
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\jniLibs",
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\jniLibs"
+    ],
+    "main_jni_directory": [
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\jni",
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\jni"
+    ],
+    "main_manifest_path": "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\AndroidManifest.xml",
+    "main_project_dir": "app",
+    "main_project_name": "app",
+    "main_r_path": "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\build\\generated\\source\\r\\debug\\R.java",
+    "main_res_directory": [
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\res",
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\res"
+    ],
+    "main_src_directory": [
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\java",
+        "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\java"
+    ],
+    "module_dependencies": {
+        "app": [
+            "swissgearlibrary"
+        ],
+        "swissgearlibrary": [
+            
+        ]
+    },
+    "modules": [
+        {
+            "name": "app",
+            "path": "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app"
+        },
+        {
+            "name": "swissgearlibrary",
+            "path": "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary"
+        }
+    ],
+    "package": "com.youjuke.buildingmaterialmall",
+    "product_flavor": "",
+    "project_source_sets": {
+        "app": {
+            "main_assets_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\assets",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\assets"
+            ],
+            "main_jniLibs_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\jniLibs",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\jniLibs"
+            ],
+            "main_jni_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\jni",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\jni"
+            ],
+            "main_manifest_path": "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\AndroidManifest.xml",
+            "main_res_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\res",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\res"
+            ],
+            "main_src_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\debug\\java",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\app\\src\\main\\java"
+            ]
+        },
+        "swissgearlibrary": {
+            "main_assets_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\release\\assets",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\main\\assets"
+            ],
+            "main_jniLibs_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\release\\jniLibs",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\main\\jniLibs"
+            ],
+            "main_jni_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\release\\jni",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\main\\jni"
+            ],
+            "main_manifest_path": "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\main\\AndroidManifest.xml",
+            "main_res_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\release\\res",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\main\\res"
+            ],
+            "main_src_directory": [
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\release\\java",
+                "E:\\AndroidStudioProjects\\BuildingMaterialMall\\swissgearlibrary\\src\\main\\java"
+            ]
+        }
+    },
+    "project_type": "gradle",
+    "root_dir": "E:\\AndroidStudioProjects\\BuildingMaterialMall",
+    "sdk_directory": "D:\\android-sdk",
+    "use_jdk8": true
+}

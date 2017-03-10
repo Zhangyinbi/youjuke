@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/back_ffffff"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+
+        <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:text="跳过"
+            android:textColor="#b5b4b5"
+            android:background="#00000000"
+            android:textSize="14sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="24dp"
+            android:id="@+id/button_skip" />
+
+        <com.youjuke.buildingmaterialmall.widgets.CircleIndicator.CircleIndicator
+        android:layout_width="wrap_content"
+        android:id="@+id/indicator"
+        android:layout_height="20dp"
+        app:ci_drawable="@drawable/lead_radius"
+        app:ci_drawable_unselected="@drawable/lead_radius_select"
+        android:layout_marginBottom="25dp"
+        app:ci_margin="10dp"
+        app:ci_height="8dp"
+        app:ci_width="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="180dp"
+            android:layout_height="47dp"
+            android:textColor="@color/back_ffffff"
+            android:background="#0ac456"
+            android:visibility="gone"
+            android:text="立即体验"
+            android:id="@+id/button_out"
+            android:layout_marginBottom="40dp"
+            android:layout_above="@+id/indicator"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+
+</FrameLayout>

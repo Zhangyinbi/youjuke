@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_hint_dialog"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="提示" />
+
+    <TextView
+        android:id="@+id/hintdialog_title"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/c_959595"
+        android:textSize="18dp" />
+
+    <View
+        android:layout_marginTop="12dp"
+        android:background="@color/d2d2d2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/hintdialog_cancel"
+            android:layout_marginBottom="12dp"
+            android:textSize="19sp"
+            android:textColor="@color/c_0089e9"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="取消" />
+        <View
+            android:id="@+id/hintdialog_view"
+            android:background="@color/d2d2d2"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/hintdialog_confirm"
+            android:textSize="19sp"
+            android:textColor="@color/c_0089e9"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="确认" />
+    </LinearLayout>
+
+</LinearLayout>

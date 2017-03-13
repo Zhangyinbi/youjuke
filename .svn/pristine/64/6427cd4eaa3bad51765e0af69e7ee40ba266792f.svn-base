@@ -81,7 +81,7 @@ public class RetrofitManager {
     }
 
     //baseUrl
-//   public static String baseUrl = "https://api.youjuke.com/materialMall/";// 线上
-    public static String baseUrl = "https://preapi.51youjuke.com/materialMall/";//线下
+   public static String baseUrl = "https://api.youjuke.com/materialMall/";// 线上
+//    public static String baseUrl = "https://preapi.51youjuke.com/materialMall/";//线下
 
 }

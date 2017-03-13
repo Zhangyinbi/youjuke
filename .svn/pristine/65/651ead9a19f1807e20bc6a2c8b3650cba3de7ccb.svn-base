@@ -18,15 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
-import com.tencent.smtt.export.external.interfaces.JsResult;
-import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.youjuke.buildingmaterialmall.BuildingMaterialApp;
 import com.youjuke.buildingmaterialmall.R;
 import com.youjuke.buildingmaterialmall.app.buy.TakeOrderActivity;
 import com.youjuke.buildingmaterialmall.app.common_web.CommonActivity;
-import com.youjuke.buildingmaterialmall.app.order.OrderDetailsActivity;
 import com.youjuke.buildingmaterialmall.app.product_details.ProductDetailsActivity;
 import com.youjuke.buildingmaterialmall.app.receipt_address_compile.ReceiptAddressCompileActivity;
 import com.youjuke.buildingmaterialmall.app.service_customer.ServiceCustomerActivity;
@@ -53,9 +50,6 @@ import com.youjuke.swissgearlibrary.utils.L;
 import com.youjuke.swissgearlibrary.utils.ToastUtil;
 import com.youjuke.swissgearlibrary.utils.Validator;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +68,6 @@ import rx.schedulers.Schedulers;
  */
 public class BargainBuyDetailsActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final String GOTOPAY = "go_to_pay_the_order";//去付款
     private String id;
     private Toolbar toolBar;
     private String URL;
@@ -101,7 +94,6 @@ public class BargainBuyDetailsActivity extends BaseActivity implements View.OnCl
     private OrderInfo orderInfo;//返回生成的订单
 
     private OneYuanBuyChanceDialog oneYuanBuyChanceDialog;
-    private String order_id="";
 
     private void assignViews() {
         toolBar = (Toolbar) findViewById(R.id.tool_bar);
@@ -163,17 +155,6 @@ public class BargainBuyDetailsActivity extends BaseActivity implements View.OnCl
             }
         };
         mTBSWebView.setWebViewClient(client);
-        mTBSWebView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onJsAlert(WebView webView, String url, String message, JsResult jsResult) {
-                if (message != null) {
-                    //弹出对话框
-                    ToastUtil.show(BargainBuyDetailsActivity.this, message);
-                }
-                jsResult.cancel();
-                return true;
-            }
-        });
         mTBSWebView.loadUrl(URL + "&platform=app");
         //获取商品分享信息
         getShareInfo();
@@ -348,7 +329,6 @@ public class BargainBuyDetailsActivity extends BaseActivity implements View.OnCl
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<ResponseBean>() {
-
                             @Override
                             public void onCompleted() {
                             }
@@ -383,32 +363,20 @@ public class BargainBuyDetailsActivity extends BaseActivity implements View.OnCl
                                                         OneYuanBuyChanceDialog.INVITATION);
                                         oneYuanBuyChanceDialog.show();
 
-                                    }/*else if("save_order_4008".equals(responseBean.getError())){
+                                    }else if("save_order_4008".equals(responseBean.getError())){
                                         //邀好友注册次数已用完，可通过购买虚拟商品获得机会！
                                         oneYuanBuyChanceDialog =
                                                 new OneYuanBuyChanceDialog(BargainBuyDetailsActivity.this,
                                                         OneYuanBuyChanceDialog.BUY);
                                         oneYuanBuyChanceDialog.show();
 
-                                    }*/else if ("save_order_4006".equals(responseBean.getError())) {
+                                    }else if ("save_order_4006".equals(responseBean.getError())) {
                                         //通过购买虚拟商品次数已用完，可通过分享报价器获得机会！
                                         oneYuanBuyChanceDialog =
                                                 new OneYuanBuyChanceDialog(BargainBuyDetailsActivity.this,
                                                         OneYuanBuyChanceDialog.SHARE);
                                         oneYuanBuyChanceDialog.show();
 
-                                    }else if ("save_order_4008".equals(responseBean.getError())){
-                                        //有订单暂未付款
-                                        try {
-                                            JSONObject jsonObject=new JSONObject(responseBean.getData());
-                                            order_id = jsonObject.getString("order_id");
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        oneYuanBuyChanceDialog =
-                                                new OneYuanBuyChanceDialog(BargainBuyDetailsActivity.this,
-                                                        OneYuanBuyChanceDialog.PAY);
-                                        oneYuanBuyChanceDialog.show();
                                     }else if (responseBean.getError().equals("save_order_4007")
                                             || responseBean.getError().equals("save_order_4009")) {
                                         //购买次数已全部用完！
@@ -482,16 +450,6 @@ public class BargainBuyDetailsActivity extends BaseActivity implements View.OnCl
         startActivity(intent);
     }
 
-    /**
-     * 有未付款的一元换购，去付款
-     */
-    @Subscribe(tags = {@Tag(GOTOPAY)})
-    public  void gotoBuy(String nothing){
-        Intent intent = new Intent(BargainBuyDetailsActivity.this, OrderDetailsActivity.class);
-        intent.putExtra("order_id",order_id);
-        intent.putExtra("status_id","1");
-        startActivity(intent);
-    }
 
     /**
      * 返回的订单ID
